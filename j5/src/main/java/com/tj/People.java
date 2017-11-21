@@ -10,6 +10,7 @@ public class People {
     }
     public People( ){
 
+        System.out.println("a");
     }
 
     public People(String name){
@@ -28,4 +29,8 @@ public class People {
         this.name = name;
     }
 
+
+    public void  test1(){
+        System.out.println("test1T");
+    }
 }
