@@ -2,6 +2,9 @@ package com.tj;
 
 public class People {
 
+    static {
+        System.out.println("静态代码块");
+    }
     protected  String name;
 
     public static void main(String[] args) {

@@ -4,9 +4,7 @@ import junit.framework.TestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class PeopleTest extends TestCase {
@@ -50,6 +48,27 @@ public class PeopleTest extends TestCase {
         System.out.println(Class.forName("java.lang.String"));
     }
 
+
+    public Connection testDriverManager() throws IOException, ClassNotFoundException, SQLException {
+        InputStream in = getClass().getClassLoader().getResourceAsStream("jdbc.properties");
+        Properties properties=new Properties();
+        properties.load(in);
+
+        Properties info=new Properties();
+        String driverclass = properties.getProperty("driver");
+
+         String user=properties.getProperty("user");
+        String password = properties.getProperty("password");
+        String url = properties.getProperty("jdbcurl");
+
+        info.put("user",user);
+        info.put("password",password);
+        Class.forName(driverclass);
+        Connection connection = DriverManager.getConnection(url,info);
+        System.out.println(connection);
+        return connection;
+    }
+
     public void testgetclassgetclassloadergetresourceasstream() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         InputStream in=getClass().getClassLoader().getResourceAsStream("jdbc.properties");
         Properties properties=new Properties();
@@ -70,10 +89,27 @@ public class PeopleTest extends TestCase {
     }
 
 
+    public void testStatisblock() throws Exception{
+        Class.forName("com.tj.People");
+        System.out.println("teststatisblock");
+
+    }
+
+
+
     public void getConnection() throws Exception{
         String driverclass="mysql";
         Driver driver = (Driver) Class.forName(driverclass).newInstance();
 
     }
+
+    public void testStatement() throws SQLException, IOException, ClassNotFoundException {
+        Connection connection=testDriverManager();
+        Statement statement=connection.createStatement();
+        String sql="INSERT INTO `zh_test`(`name`) VALUES ('hehe')";
+        statement.execute(sql);
+        statement.close();
+    }
+
 
 }
