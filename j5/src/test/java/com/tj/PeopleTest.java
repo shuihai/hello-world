@@ -1,11 +1,15 @@
 package com.tj;
 
 import junit.framework.TestCase;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class PeopleTest extends TestCase {
     public void setUp() throws Exception {
@@ -106,10 +110,59 @@ public class PeopleTest extends TestCase {
     public void testStatement() throws SQLException, IOException, ClassNotFoundException {
         Connection connection=testDriverManager();
         Statement statement=connection.createStatement();
-        String sql="INSERT INTO `zh_test`(`name`) VALUES ('hehe')";
+        String sql="INSERT INTO `zh_test`(`name`) VALUES ('haha')";
         statement.execute(sql);
         statement.close();
     }
 
+    public void testResultset() throws SQLException, IOException, ClassNotFoundException {
+        ResultSet rs=null;
+        Connection connection = testDriverManager();
+        Statement statement=connection.createStatement();
+        String sql = "select * from zh_test  ";
+        rs=statement.executeQuery(sql);
+        while (rs.next()){
+            int id=rs.getInt(1);
+            String name=rs.getString("name");
+            System.out.println(id);
+            System.out.println(name);
+        }
+    }
 
+
+    public void testScanner(){
+        Scanner scanner=new Scanner(System.in);
+
+        People people=new People();
+        System.out.println("name:");
+        people.setName(scanner.next());
+
+        System.out.println(people.getName());
+    }
+
+    public void testdbcp() throws SQLException {
+        BasicDataSource dataSource=null;
+        dataSource=new BasicDataSource();
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test");
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+
+        dataSource.setInitialSize(10);
+        dataSource.setMaxActive(50);
+        dataSource.setMinIdle(5);
+        Connection connection=dataSource.getConnection();
+        System.out.println(connection);
+
+    }
+
+    public  void testdatasourcefactory() throws Exception {
+        Properties properties = new Properties();
+        InputStream inputStream=getClass().getClassLoader().getResourceAsStream("jdbc2.properties");
+        properties.load(inputStream);
+
+        DataSource dataSource= BasicDataSourceFactory.createDataSource(properties);
+        System.out.println(dataSource.getConnection());
+
+    }
 }
