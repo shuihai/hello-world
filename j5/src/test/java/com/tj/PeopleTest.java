@@ -50,7 +50,7 @@ public class PeopleTest extends TestCase {
         System.out.println(Class.forName("java.lang.String"));
     }
 
-    public void testgetclassgetclassloadergetresourceasstream() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    public void testGetclassGetclassloaderGetresourceasstream() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         InputStream in=getClass().getClassLoader().getResourceAsStream("jdbc.properties");
         Properties properties=new Properties();
         properties.load(in);
@@ -63,7 +63,7 @@ public class PeopleTest extends TestCase {
         Driver driver= (Driver) Class.forName(driverclass).newInstance();
         Properties info =new Properties();
         info.put("user","root");
-        info.put("password","123456");
+        info.put("password","");
         Connection connection=driver.connect(url,info);
         System.out.println(connection);
 
