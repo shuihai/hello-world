@@ -2,7 +2,7 @@ package com.xiaoming.h1;
 
 import org.hibernate.Session;
 
-//import com.xiaoming.h1.util.HibernateUtil;
+import com.xiaoming.h1.HibernateUtil;
 
 public class App {
     public static void main(String[] args) {

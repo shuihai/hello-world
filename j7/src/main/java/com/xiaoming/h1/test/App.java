@@ -11,7 +11,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Maven3 + Hibernate + Oracle10g");
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session =  HibernateUtil.getSessionFactory().openSession();
 //
 //
 //        session.beginTransaction();
