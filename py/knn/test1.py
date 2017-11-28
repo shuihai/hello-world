@@ -143,4 +143,8 @@ def testmaohao():
 
 def testprint():
     print("Name:%10s Age:%8d Height:%8.2f"%("Aviad",25,1.83))
-testprint()
+
+def testraw_input():
+    a=float(input("hehe"))
+    print(a)
+testraw_input()
