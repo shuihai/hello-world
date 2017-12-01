@@ -5,6 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import operator
 
+
 def createDataSet():
     group = array([[1.0, 1.1], [1.0, 1.0], [0, 0], [0, 0.1]])
     labels = ['A', 'A', 'B', 'B']
@@ -107,7 +108,6 @@ def testknn_matplotlib():
 
 def testmin():
     a = array([[1, 2, 3], [4, 5, 1], [0, 7, 8]])
-
     b = a.min(0)
     print(b)
 
@@ -118,33 +118,70 @@ def testdivision():
     print(a / b)
     # print(linalg.solve(a, b))
 
+
 def teststarstar():
-    a=array([[1,2],[3,4]])
-    c=array([1,2])
-    d=tile(c,(2,1))
-    b=a**2
+    a = array([[1, 2], [3, 4]])
+    c = array([1, 2])
+    d = tile(c, (2, 1))
+    b = a ** 2
     print(b)
-    print(d**0.5)
+    print(d ** 0.5)
+
 
 def testsum():
-    a=array([[1,2,3],[4,5,6]])
+    a = array([[1, 2, 3], [4, 5, 6]])
     print(a.sum(axis=0))
     print(a.sum(axis=1))
 
+
 def testsorted():
-    a={'a':1,'c':2,'b':3}
-    print(sorted(a.items(),key=operator.itemgetter(0),reverse=True))
-    print(type(sorted(a.items(),key=operator.itemgetter(0),reverse=True)))
+    a = {'a': 1, 'c': 2, 'b': 3}
+    print(sorted(a.items(), key=operator.itemgetter(0), reverse=True))
+    print(type(sorted(a.items(), key=operator.itemgetter(0), reverse=True)))
     print(type(a))
 
+
 def testmaohao():
-    a=array([[1,2,3],[1,2,6],[1,2,4],[1,2,5]])
-    print(a[0:3,:])
+    a = array([[1, 2, 3], [1, 2, 6], [1, 2, 4], [1, 2, 5]])
+    print(a[0:3, :])
+
 
 def testprint():
-    print("Name:%10s Age:%8d Height:%8.2f"%("Aviad",25,1.83))
+    print("Name:%10s Age:%8d Height:%8.2f" % ("Aviad", 25, 1.83))
+
 
 def testraw_input():
-    a=float(input("hehe"))
+    a = float(input("hehe"))
     print(a)
-testraw_input()
+
+
+def testnotin():
+    a = "c"
+    b = [1, 2, 3]
+    c = {'c': 3, "d": 4}
+    d = c.keys()
+    print(c.keys())
+    if a not in d:
+        print("notin")
+    else:
+        print("in")
+
+def testappendtestextend():
+    a=[1,2,3]
+    b=[4,5,6]
+    a.extend(b)
+    print(a)
+    a.append(b)
+    print(a)
+
+def testfor():
+    c=[[1,2],[3,4]]
+    a=[b[1] for b in c]
+    print(a)
+
+def testset():
+    a=[2,2,4,3]
+    b=set(a)
+    print(b)
+
+testset()
