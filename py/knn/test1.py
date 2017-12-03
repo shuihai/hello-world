@@ -179,9 +179,24 @@ def testfor():
     a=[b[1] for b in c]
     print(a)
 
+def testdel():
+    a = ['a', 'b' ]
+    del(a[0])
+    print(a)
+
 def testset():
     a=[2,2,4,3]
     b=set(a)
     print(b)
 
-testset()
+def testcount():
+    a=['a','b','a']
+    print(a.count('a'))
+
+def testmaohao2():
+    a=[1,213,3]
+    b=a[:]
+    c=a
+    print(b)
+    print(c)
+testmaohao2()
