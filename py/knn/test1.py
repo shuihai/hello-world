@@ -184,4 +184,45 @@ def testset():
     b=set(a)
     print(b)
 
-testset()
+def testdict():
+    decisionNode = dict(boxstyle="sawtooth", fc="0.8")
+    a={'a':1,'b':2}
+    print(decisionNode)
+    print(a)
+
+def test__name__():
+    d=dict(boxstyle="sawtooth", fc="0.8")
+    a={'a':1}
+    b=[1,2]
+    c=(3,4)
+    print(type(d))
+    print(type(d).__name__)
+    # print(type(a))
+    # print(d.__name__)
+    # print(b.__name__)
+    # print(c.__name__)
+
+def testif():
+    a=2
+    if a==1:
+        print(1)
+    else:
+        print(2)
+
+def testkeys():
+    a = {'a': 1,'b': 1}
+    b=list(a.keys())[0]
+    print(b)
+
+
+def testfigure():
+    fig=plt.figure(4,facecolor='white')
+    fig.clf()
+    # a=dict(xticks=[0,2], yticks=[1,2])
+    # ax1=plt.subplot(111,frameon=True,**a)
+    ax1 = plt.subplot(111, frameon=True)
+    ax1.text(0.2, 0.3, 's', fontsize=12)#(x, y, s, fontsize=12)
+    plt.show()
+
+
+testfigure()
