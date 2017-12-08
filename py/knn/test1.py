@@ -224,5 +224,29 @@ def testfigure():
     ax1.text(0.2, 0.3, 's', fontsize=12)#(x, y, s, fontsize=12)
     plt.show()
 
+def testpickle():
+    import pickle
+    fw=open('a.txt','wb+')
+    pickle.dump('aaab',fw)
+    fw.close()
+    fr=open('a.txt','rb+')
+    a=pickle.load(fr)
+    print(a)
+    fr.close()
 
-testfigure()
+def testkuohaoxing():
+    a=[0]*3
+    print(a)
+    b=[1,2,3]*2
+    print(b)
+    c=array([1,2,3])*2
+    print(c)
+
+def testunionset():
+    c=[1,2,3,3]
+    a=set(c)
+    b=set([2,4])
+    d=b | a
+    print(d)
+
+testunionset()

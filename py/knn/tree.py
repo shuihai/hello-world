@@ -67,4 +67,8 @@ def majorityCnt(classList):
 def createTree(dataSet,labels):
     classList =[example[-1] for example in dataSet]
 
+
+def storeTree(inputTree,filename):
+    a=1
+
 testtest()
