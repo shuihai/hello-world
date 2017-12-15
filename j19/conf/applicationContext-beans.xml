@@ -25,4 +25,7 @@
 		<property name="departmentService" ref="departmentService"></property>
 	</bean>
 
+	<bean id="userAction" class="com.atguigu.ssh.actions.UserAction"
+		  scope="prototype">
+	</bean>
 </beans>

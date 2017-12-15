@@ -35,9 +35,10 @@
 
 		<action name="user" class="userAction" method="add" >
 			<result name="hehe">/WEB-INF/views/hehe.jsp</result>
-
 		</action>
-
+		<action name="hehe" class="heheAction" method="add" >
+			<result name="hehe">/WEB-INF/views/hehe2.jsp</result>
+		</action>
     </package>
 
 </struts>
