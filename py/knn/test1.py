@@ -249,4 +249,29 @@ def testunionset():
     d=b | a
     print(d)
 
-testunionset()
+def testsum():
+    a=[0,1,0,1,0]
+    b=sum(a)
+    print(b)
+
+def testuniform():
+    print(random.uniform(1,10))
+
+def testre():
+    import re
+    a=mySent='This book is the best  book on Python'
+    mySent='This book is the best  book on Python'
+    c=re.compile('\\W*')
+    e=c.split(mySent)
+    b=re.split(r'\W*',a)
+    print(e)
+    print(b)
+
+def testlowerupper():
+    a='TttTaAAa'
+    b=a.lower()
+    print(b)
+    b=a.upper()
+    print(b)
+
+testlowerupper()
