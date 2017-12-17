@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2013-10-22 15:28:34 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.xiaoming.h1.demo.Dbuser" table="DBUSER" schema="test">
+    <class name="com.xiaoming.j7.demo.Dbuser" table="DBUSER" schema="test">
         <id name="userId" type="int">
             <column name="USER_ID" precision="5" scale="0" />
             <generator class="assigned" />
