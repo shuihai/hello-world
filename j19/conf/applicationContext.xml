@@ -11,7 +11,8 @@
 
 	<!-- 导入资源文件 -->
 	<context:property-placeholder location="classpath:db.properties"/>
-	<context:component-scan base-package="com.atguigu.ssh"/>
+
+	<context:component-scan base-package="com.atguigu.ssh.annotation"/>
 	<!-- 配置 C3P0 数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="${jdbc.user}"></property>
@@ -27,9 +28,29 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>
+		<!--<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>-->
 	</bean>
-	
+	<bean id="employeeDao" class="com.atguigu.ssh.dao.EmployeeDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="departmentDao" class="com.atguigu.ssh.dao.DepartmentDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="employeeService" class="com.atguigu.ssh.service.EmployeeService">
+		<property name="employeeDao" ref="employeeDao"></property>
+	</bean>
+
+	<bean id="departmentService" class="com.atguigu.ssh.service.DepartmentService">
+		<property name="departmentDao" ref="departmentDao"></property>
+	</bean>
+
+	<bean id="employeeAction" class="com.atguigu.ssh.actions.EmployeeAction"
+		  scope="prototype">
+		<property name="employeeService" ref="employeeService"></property>
+		<property name="departmentService" ref="departmentService"></property>
+	</bean>
 	<!-- 配置 Spring 的声明式事务 -->
 	<!-- 1. 配置 hibernate 的事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -50,5 +71,5 @@
 		<aop:pointcut expression="execution(* com.atguigu.ssh.service.*.*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
-
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
