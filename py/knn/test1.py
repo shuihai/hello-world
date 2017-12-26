@@ -166,35 +166,40 @@ def testnotin():
     else:
         print("in")
 
+
 def testappendtestextend():
-    a=[1,2,3]
-    b=[4,5,6]
+    a = [1, 2, 3]
+    b = [4, 5, 6]
     a.extend(b)
     print(a)
     a.append(b)
     print(a)
 
+
 def testfor():
-    c=[[1,2],[3,4]]
-    a=[b[1] for b in c]
+    c = [[1, 2], [3, 4]]
+    a = [b[1] for b in c]
     print(a)
 
+
 def testset():
-    a=[2,2,4,3]
-    b=set(a)
+    a = [2, 2, 4, 3]
+    b = set(a)
     print(b)
+
 
 def testdict():
     decisionNode = dict(boxstyle="sawtooth", fc="0.8")
-    a={'a':1,'b':2}
+    a = {'a': 1, 'b': 2}
     print(decisionNode)
     print(a)
 
+
 def test__name__():
-    d=dict(boxstyle="sawtooth", fc="0.8")
-    a={'a':1}
-    b=[1,2]
-    c=(3,4)
+    d = dict(boxstyle="sawtooth", fc="0.8")
+    a = {'a': 1}
+    b = [1, 2]
+    c = (3, 4)
     print(type(d))
     print(type(d).__name__)
     # print(type(a))
@@ -202,76 +207,107 @@ def test__name__():
     # print(b.__name__)
     # print(c.__name__)
 
+
 def testif():
-    a=2
-    if a==1:
+    a = 2
+    if a == 1:
         print(1)
     else:
         print(2)
 
+
 def testkeys():
-    a = {'a': 1,'b': 1}
-    b=list(a.keys())[0]
+    a = {'a': 1, 'b': 1}
+    b = list(a.keys())[0]
     print(b)
 
 
 def testfigure():
-    fig=plt.figure(4,facecolor='white')
+    fig = plt.figure(4, facecolor='white')
     fig.clf()
     # a=dict(xticks=[0,2], yticks=[1,2])
     # ax1=plt.subplot(111,frameon=True,**a)
     ax1 = plt.subplot(111, frameon=True)
-    ax1.text(0.2, 0.3, 's', fontsize=12)#(x, y, s, fontsize=12)
+    ax1.text(0.2, 0.3, 's', fontsize=12)  # (x, y, s, fontsize=12)
     plt.show()
+
 
 def testpickle():
     import pickle
-    fw=open('a.txt','wb+')
-    pickle.dump('aaab',fw)
+    fw = open('a.txt', 'wb+')
+    pickle.dump('aaab', fw)
     fw.close()
-    fr=open('a.txt','rb+')
-    a=pickle.load(fr)
+    fr = open('a.txt', 'rb+')
+    a = pickle.load(fr)
     print(a)
     fr.close()
 
+
 def testkuohaoxing():
-    a=[0]*3
+    a = [0] * 3
     print(a)
-    b=[1,2,3]*2
+    b = [1, 2, 3] * 2
     print(b)
-    c=array([1,2,3])*2
+    c = array([1, 2, 3]) * 2
     print(c)
 
+
 def testunionset():
-    c=[1,2,3,3]
-    a=set(c)
-    b=set([2,4])
-    d=b | a
+    c = [1, 2, 3, 3]
+    a = set(c)
+    b = set([2, 4])
+    d = b | a
     print(d)
 
+
 def testsum():
-    a=[0,1,0,1,0]
-    b=sum(a)
+    a = [0, 1, 0, 1, 0]
+    b = sum(a)
     print(b)
 
+
 def testuniform():
-    print(random.uniform(1,10))
+    print(random.uniform(1, 10))
+
 
 def testre():
     import re
-    a=mySent='This book is the best  book on Python'
-    mySent='This book is the best  book on Python'
-    c=re.compile('\\W*')
-    e=c.split(mySent)
-    b=re.split(r'\W*',a)
+    a = mySent = 'This book is the best  book on Python'
+    mySent = 'This book is the best  book on Python'
+    c = re.compile('\\W*')
+    e = c.split(mySent)
+    b = re.split(r'\W*', a)
     print(e)
     print(b)
 
+
 def testlowerupper():
-    a='TttTaAAa'
-    b=a.lower()
+    a = 'TttTaAAa'
+    b = a.lower()
     print(b)
-    b=a.upper()
+    b = a.upper()
     print(b)
 
-testlowerupper()
+
+def testmaohao():
+    # errArr = mat(ones((3, 1)))
+    # errArr[predictedVals == labelMat] = 0
+    datMat = matrix([[1., 2.1],
+                     [2., 1.1],
+                     [1.3, 1.],
+                     [1., 1.],
+                     [2., 1.]])
+    # print(type(datMat))
+    # datMat=mat(datMat)
+    # print(type(datMat))
+    classLabels = [1.0, 1.0, -1.0, -1.0, 1.0]
+    classLabels = mat(classLabels).T
+    retArray = ones((shape(datMat)[0], 1))
+    # print(datMat[:, 0])
+    print(retArray)
+    # retArray[datMat[:, 1] <= classLabels] = -1.0
+    retArray[mat([1,1,1,1,1]).T <= classLabels] = -1.0
+    print(retArray)
+    # print(retArray)
+
+testmaohao()

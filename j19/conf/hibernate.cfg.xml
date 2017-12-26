@@ -16,8 +16,10 @@
     
     	<!-- 生成数据表的策略 -->
     	<property name="hibernate.hbm2ddl.auto">update</property>
-    	
-    	<!-- 二级缓存相关 -->
+		<property name="connection.url">jdbc:mysql://localhost:3306/test</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<!-- 二级缓存相关 -->
     	
     </session-factory>
     

@@ -12,7 +12,7 @@
 	<!-- 导入资源文件 -->
 	<context:property-placeholder location="classpath:db.properties"/>
 
-	<context:component-scan base-package="com.atguigu.ssh.annotation"/>
+	<context:component-scan base-package="com.atguigu.ssh"/>
 	<!-- 配置 C3P0 数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="${jdbc.user}"></property>
@@ -28,7 +28,7 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<!--<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>-->
+		<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>
 	</bean>
 	<bean id="employeeDao" class="com.atguigu.ssh.dao.EmployeeDao">
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -51,6 +51,11 @@
 		<property name="employeeService" ref="employeeService"></property>
 		<property name="departmentService" ref="departmentService"></property>
 	</bean>
+
+	<!--<bean id="heheAction" class="com.atguigu.ssh.actions.HeheAction"-->
+		  <!--scope="prototype">-->
+
+	<!--</bean>-->
 	<!-- 配置 Spring 的声明式事务 -->
 	<!-- 1. 配置 hibernate 的事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -68,8 +73,9 @@
 	
 	<!-- 3. 配置事务切入点, 再把事务属性和事务切入点关联起来 -->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.atguigu.ssh.service.*.*(..))" id="txPointcut"/>
+		<aop:pointcut expression="execution(* com.atguigu.ssh.*.*.*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>

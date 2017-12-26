@@ -20,6 +20,15 @@
         </webroots>
       </configuration>
     </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="hibernate.cfg.xml" value="46149a2f-639f-4a08-8fc7-2d1fc840c435" />
+        </datasource-map>
+        <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/conf/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/build/classes" />
@@ -363,5 +372,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Hibernate" level="project" />
+    <orderEntry type="library" name="jsp-api" level="project" />
   </component>
 </module>

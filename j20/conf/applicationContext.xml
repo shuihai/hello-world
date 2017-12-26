@@ -31,7 +31,7 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<!--<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>-->
+		<property name="mappingLocations" value="classpath:com/atguigu/ssh/entities/*.hbm.xml"></property>
 	</bean>
 	<bean id="employeeDao" class="com.atguigu.ssh.dao.EmployeeDao">
 		<property name="sessionFactory" ref="sessionFactory"></property>

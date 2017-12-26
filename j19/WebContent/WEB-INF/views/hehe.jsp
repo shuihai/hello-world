@@ -47,6 +47,10 @@
     </script>
 </head>
 <body>
-hehe
+${"hehe"}
+${applicationScope.hehe}
+${sessionkey}
+${requestkey}
+hehehehe
 </body>
 </html>
