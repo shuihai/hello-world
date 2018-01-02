@@ -310,4 +310,8 @@ def testmaohao():
     print(retArray)
     # print(retArray)
 
-testmaohao()
+def testa0():
+    a=mat([[1,2],[3,4]])
+    print(a)
+    print(a.A[0])
+testa0()
