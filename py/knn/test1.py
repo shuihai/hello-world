@@ -314,4 +314,10 @@ def testa0():
     a=mat([[1,2],[3,4]])
     print(a)
     print(a.A[0])
-testa0()
+
+def testmean():
+    a=mat([[1,2],[4,4]])
+    print(mean(a,0))
+    print(1)
+    
+testmean()
