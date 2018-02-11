@@ -14,6 +14,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.util.Map;
 
 @Service
@@ -54,6 +55,9 @@ public class HeheAction implements ApplicationAware,SessionAware,RequestAware{
 //        application.put("hehe","12345");
 //        session.put("sessionkey","sessionval");
 //        request.put("requestkey","requestval");
+
+        InputStream is = this.getClass().getResourceAsStream("/a.txt");
+
         return "hehe";
     }
 

@@ -319,5 +319,19 @@ def testmean():
     a=mat([[1,2],[4,4]])
     print(mean(a,0))
     print(1)
-    
-testmean()
+
+
+def testjsonload():
+    import json
+    path='usagov_bitly_data2012-03-16-1331923249.txt'
+    records = [json.load(line) for line in open(path)]
+    print(records)
+
+
+def testmap():
+    a=[1,2]
+    b=map(float,a)
+    print(a)
+
+
+testmap()
