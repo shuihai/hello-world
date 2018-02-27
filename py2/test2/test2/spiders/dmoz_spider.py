@@ -15,29 +15,40 @@ class DmozSpider(scrapy.Spider):
     # allowed_domains = ["dmoztools.net"]
     start_urls = [
         # "http://www.itcrm.com/Home/Info/solution.html",
-        "http://www.itcrm.com/Home/Info/news/type_id/4.html",
-
+        # "http://www.itcrm.com/Home/Info/news/type_id/4.html",
+        "https://www.baidu.com/",
     ]
     urlset = []
 
     def parse(self, response):
-        url =["http://www.itcrm.com/sitemap.txt"]
-        item = FileItem()
-        # item.file_urls  = url
-        item['file_urls'] = url
-        print 9090
-        from test2 import items
-        print isinstance(item, FileItem)
-        yield item
 
-        url = ["http://www.itcrm.com/505.gif"]
-        item = MyItem()
-        # item.file_urls  = url
-        item['image_urls'] = url
-        print 9091
-        from test2 import items
-        print isinstance(item, MyItem)
-        yield item
+
+
+        # print response
+        print 4
+        captcha = input("请输入你的验证>")
+        print captcha
+        str = response.css('title::text').extract()
+        print str[0]
+        # print str[0].decode( "UTF-8")
+        # print unicode(str[0], "UTF-8")
+        # url =["http://www.itcrm.com/sitemap.txt"]
+        # item = FileItem()
+        # # item.file_urls  = url
+        # item['file_urls'] = url
+        # print 9090
+        # from test2 import items
+        # print isinstance(item, FileItem)
+        # yield item
+        #
+        # url = ["http://www.itcrm.com/505.gif"]
+        # item = MyItem()
+        # # item.file_urls  = url
+        # item['image_urls'] = url
+        # print 9091
+        # from test2 import items
+        # print isinstance(item, MyItem)
+        # yield item
 
 
         # self.urlset.extend(response.css('div[class *= page] a::attr(href)').extract())
@@ -58,9 +69,9 @@ class DmozSpider(scrapy.Spider):
         # item['image_urls']= imageurl
         # yield item
         # print imageurl
-        a=[[2,4],[5,6],[7,8]]
-        b =[c for c,b in a if b>5]
-        print b
+        # a=[[2,4],[5,6],[7,8]]
+        # b =[c for c,b in a if b>5]
+        # print b
         # with open('C:\wamp\hehe.txt','wb') as f:
         #     f.write('hehe')
         # filename = response.url.split("/")[-2]
