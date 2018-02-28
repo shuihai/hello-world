@@ -3,6 +3,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from numpy.random import randn
+from datetime import datetime
+from datetime import timedelta
+
+
 def testread_csv():
     # result = pd.read_csv('ex6.csv')
     # print result
@@ -164,8 +168,28 @@ def testsubplots12():
     df.plot()
     plt.show()
 
+def testsubplots13():
+    fig, axes = plt.subplots(2, 1)
+    data = Series(np.random.rand(16), index=list('abcdefghijklmnop'))
+    data.plot(kind='bar', ax=axes[0], color='k', alpha=0.7)
+    data.plot(kind='barh', ax=axes[1], color='k', alpha=0.7)
+    plt.show()
 
-testsubplots12()
+def testdatatime():
+    now = datetime.now()
+    print now.year
+    delta = datetime(2011, 1, 7) - datetime(2008, 6, 24, 8, 15)
+    print delta
+
+def testdatatime1():
+    from datetime import datetime
+    dates = [datetime(2011, 1, 2), datetime(2011, 1, 5), datetime(2011, 1, 7),  datetime(2011, 1, 8), datetime(2011, 1, 10), datetime(2011, 1, 12)]
+    ts = Series(np.random.randn(6), index=dates)
+    print ts
+    print ts[::2]
+
+
+testdatatime1()
 
 
 
