@@ -4,6 +4,7 @@ from scrapy.item import BaseItem
 from test2.items import Test2Item
 from test2.items import FileItem
 from test2.items import MyItem
+
 a = 2
 
 urlset2 = ['http://www.itcrm.com/Home/Info/news/type_id/4/p/2.html',
@@ -85,8 +86,6 @@ class DmozSpider(scrapy.Spider):
         #     urls = response.urljoin(url.extract())  # urljoin
         #     print urls
         #     yield scrapy.Request(url=urls,callback=self.parse, dont_filter=False)
-
-
 
 
     def parse2(self, response):

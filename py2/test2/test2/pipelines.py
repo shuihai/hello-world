@@ -120,8 +120,6 @@ class Test2Pipeline(object):
                                                  [(d['name'])])
             self.client.commit()
 
-
-
         return item
 
 
