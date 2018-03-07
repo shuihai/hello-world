@@ -54,8 +54,7 @@ class DayPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, items.DayItem):
             d = dict(item)
-
-            effect_row = self.cursor.executemany("insert into xiaoming_stock(date,name)values(%s,%s )",
-                                                 [(d['date'],d['name'])])
+            effect_row = self.cursor.executemany("INSERT INTO `xiaoming_stock`( `date`, `code`, `name`, `tclose`, `high`, `low`, `topen`, `lclose`, `chg`, `pchg`, `voturnover`, `vaturnover`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s  )",
+                                                 [(d['date'],d['code'],d['name'],d['tclose'],d['high'],d['low'],d['topen'],d['lclose'],d['chg'],d['pchg'],d['voturnover'],d['vaturnover'])])
             self.client.commit()
         return item

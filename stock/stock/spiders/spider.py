@@ -15,18 +15,20 @@ class Stock(scrapy.Spider):
 
     def parse(self, response):
         a = response.body_as_unicode().split('\r\n')
-        b=a[1:2]
-        c=b[0]
-        c=c.encode('utf-8')
-        print c
-
-        # str=u'\xc8'
-        # b=str.encode('ISO 8859-1')
-        # print b
-
-        # for day in a[1:-1]:
-        #     day_arr = day.split(',')
-        #     item =  items.DayItem()
-        #     item['name'] = day_arr[2]
-        #     item['date'] = day_arr[0]
-        #     yield item
+        b = a[1:-1]
+        for day in a[1:-1]:
+            day_arr = day.split(',')
+            item =  items.DayItem()
+            item['date'] = day_arr[0]
+            item['code'] = day_arr[1][1::]
+            item['name'] = day_arr[2]
+            item['tclose'] = day_arr[3]
+            item['high'] = day_arr[4]
+            item['low'] = day_arr[5]
+            item['topen'] = day_arr[6]
+            item['lclose'] = day_arr[7]
+            item['chg'] = day_arr[8]
+            item['pchg'] = day_arr[9]
+            item['voturnover'] = day_arr[10]
+            item['vaturnover'] = day_arr[11]
+            yield item

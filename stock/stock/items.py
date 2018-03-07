@@ -15,5 +15,15 @@ class StockItem(scrapy.Item):
 
 class DayItem(scrapy.Item):
     # define the fields for your item here like:
-    name = scrapy.Field()
     date = scrapy.Field()
+    code = scrapy.Field()
+    name = scrapy.Field()
+    tclose = scrapy.Field()
+    high = scrapy.Field()
+    low = scrapy.Field()
+    topen = scrapy.Field()
+    lclose = scrapy.Field()
+    chg = scrapy.Field()
+    pchg = scrapy.Field()
+    voturnover = scrapy.Field()
+    vaturnover =  scrapy.Field()
