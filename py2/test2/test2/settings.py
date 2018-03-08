@@ -22,6 +22,7 @@ PWD = "123456"
 DB = "test"
 TABLE = "zh_test"
 
+
 # DUPEFILTER_CLASS = 'test2.dup.UrlFilter'
 
 BOT_NAME = 'test2'

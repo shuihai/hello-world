@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-# Scrapy settings for stock project
+# Scrapy settings for get_stock_code project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -8,28 +8,18 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-FEED_EXPORT_ENCODING = 'utf-8' 
-BOT_NAME = 'stock'
 
-SPIDER_MODULES = ['stock.spiders']
-NEWSPIDER_MODULE = 'stock.spiders'
+BOT_NAME = 'get_stock_code'
 
-HOST = "127.0.0.1"
-PORT = 3306
-USER = "root"
-PWD = "123456"
-DB = "test"
-TABLE = "xiaoming_stock"
-TABLE2 = "xiaoming_stock_code"
-
-
+SPIDER_MODULES = ['get_stock_code.spiders']
+NEWSPIDER_MODULE = 'get_stock_code.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'stock (+http://www.yourdomain.com)'
+#USER_AGENT = 'get_stock_code (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
+ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -37,7 +27,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 3
+#DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -57,13 +47,13 @@ DOWNLOAD_DELAY = 3
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'stock.middlewares.StockSpiderMiddleware': 543,
+#    'get_stock_code.middlewares.GetStockCodeSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'stock.middlewares.StockDownloaderMiddleware': 543,
+#    'get_stock_code.middlewares.GetStockCodeDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -74,10 +64,9 @@ DOWNLOAD_DELAY = 3
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'stock.pipelines.StockPipeline': 300,
-'stock.pipelines.DayPipeline': 400,
-}
+#ITEM_PIPELINES = {
+#    'get_stock_code.pipelines.GetStockCodePipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

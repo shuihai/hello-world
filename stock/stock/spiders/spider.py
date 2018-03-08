@@ -1,17 +1,42 @@
 # -*- coding: UTF-8 -*-
 import scrapy
-from scrapy.item import BaseItem
 from stock import items
-
+import pymysql
+import time
+from scrapy.utils.project import get_project_settings
 
 class Stock(scrapy.Spider):
     name = "stock"
-    # allowed_domains = ["dmoztools.net"]
+    def __init__(self):
+        settings = get_project_settings()
+        self.host = settings['HOST']
+        self.port = settings['PORT']
+        self.user = settings['USER']
+        self.pwd = settings['PWD']
+        self.db = settings['DB']
+        self.table = settings['TABLE2']
 
-    start_urls = [
-        "http://quotes.money.163.com/service/chddata.html?code=0000001&start=20150811&end=20150911&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER",
-    ]
-    urlset = []
+    def start_requests(self):
+        url_set = self.get_url()
+        start_time = time.strftime('%Y%m%d', time.localtime(time.time()-3600*24*365*10))
+        end_time = time.strftime('%Y%m%d', time.localtime(time.time()))
+        print start_time
+
+
+        for url in url_set:
+            if(url['type']==0):
+                yield scrapy.Request(
+                    'http://quotes.money.163.com/service/chddata.html?code='+str(url['type'])+url['code']+'&start='+start_time+'&end='+end_time+'&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER')
+            elif(url['type']==1):
+                yield scrapy.Request(
+                    'http://quotes.money.163.com/service/chddata.html?code='+str(url['type'])+url['code']+'&start='+start_time+'&end='+end_time+'&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER')
+
+    def get_url(self):
+        client = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, db=self.db,charset='utf8' )
+        cursor =  client.cursor(cursor=pymysql.cursors.DictCursor)
+        cursor.execute("select * from "+self.table+" ")
+        url_set = cursor.fetchall()
+        return url_set
 
     def parse(self, response):
         a = response.body_as_unicode().split('\r\n')
