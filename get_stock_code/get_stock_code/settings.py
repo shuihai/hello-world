@@ -14,7 +14,12 @@ BOT_NAME = 'get_stock_code'
 SPIDER_MODULES = ['get_stock_code.spiders']
 NEWSPIDER_MODULE = 'get_stock_code.spiders'
 
-
+HOST = "127.0.0.1"
+PORT = 3306
+USER = "root"
+PWD = "123456"
+DB = "test"
+TABLE = "xiaoming_stock_code"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'get_stock_code (+http://www.yourdomain.com)'
 
@@ -64,9 +69,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'get_stock_code.pipelines.GetStockCodePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'get_stock_code.pipelines.GetStockCodePipeline': 300,
+    'get_stock_code.pipelines.CodePipeline': 400,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

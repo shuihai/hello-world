@@ -12,3 +12,10 @@ class GetStockCodeItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+class CodeItem(scrapy.Item):
+    # define the fields for your item here like:
+    name = scrapy.Field()
+    code = scrapy.Field()
+    type = scrapy.Field()

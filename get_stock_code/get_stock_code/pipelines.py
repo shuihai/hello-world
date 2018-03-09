@@ -4,17 +4,15 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
+from get_stock_code import items
 import pymysql
-from stock import items
 
-
-class StockPipeline(object):
+class GetStockCodePipeline(object):
     def process_item(self, item, spider):
         return item
 
 
-class DayPipeline(object):
+class CodePipeline(object):
     def __init__(self, host, port, user, pwd, db, table):
         self.host = host
         self.port = port
@@ -41,6 +39,7 @@ class DayPipeline(object):
         """
         爬虫刚启动时执行一次
         """
+
         self.client = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, db=self.db,
                                       charset='utf8')
         self.cursor = self.client.cursor()
@@ -52,12 +51,15 @@ class DayPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        if isinstance(item, items.DayItem):
+        if isinstance(item, items.CodeItem):
             d = dict(item)
-            self.cursor.execute("select * from " + self.table + " where code=" + d['code']+" and date="+d['date'])
-            data = self.cursor.fetchone()
-            if not data:
-                effect_row = self.cursor.executemany("INSERT INTO `xiaoming_stock`( `date`, `code`, `name`, `tclose`, `high`, `low`, `topen`, `lclose`, `chg`, `pchg`, `voturnover`, `vaturnover`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s  )",
-                                                     [(d['date'],d['code'],d['name'],d['tclose'],d['high'],d['low'],d['topen'],d['lclose'],d['chg'],d['pchg'],d['voturnover'],d['vaturnover'])])
+            self.cursor.execute("select * from " + self.table + " where code="+d['code'])
+            codedata = self.cursor.fetchone()
+
+            if not codedata:
+                effect_row = self.cursor.executemany("INSERT INTO `xiaoming_stock_code`(  `code`, `name`, `type` ) VALUES (%s,%s,%s )",
+                                                 [( d['code'],d['name'],d['type'] )])
                 self.client.commit()
+
         return item
+
