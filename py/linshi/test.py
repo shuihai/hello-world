@@ -1,6 +1,23 @@
 #encoding:gb2312
-import urllib.request
+# import urllib.request
 import  time
+from svmutil import *
+import random
+
+def createdata():
+    file='test.t'
+    with open(file, 'a+') as f:
+        for i in range(0, 99):
+            a=random.randint(1, 20)
+            if a<=10:
+                datastr = '-1 1:'+ str(a)
+            else:
+                datastr = '1 1:' + str(a)
+            f.write(datastr + '\n')
+        #     datastr = ''
+        # for dd in d:
+        #     datastr = datastr + dd.lstrip("'") + ','
+        # f.write(datastr + '\n')
 
 def get_page(url):  #获取页面数据
     req=urllib.request.Request(url,headers={
@@ -31,4 +48,5 @@ def get_index_history_byNetease(index_temp):
     col_info=page[0].split(',')   #各列的含义
     print (col_info)
 
-get_index_history_byNetease('sh000001')
+createdata()
+
