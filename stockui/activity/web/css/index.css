@@ -1,0 +1,109 @@
+*{margin: 0;padding: 0;}
+body{width: 1440px;margin: auto;background: #F6F8F9;font-family: "微软雅黑";}
+li{list-style: none;}
+hr{width: 1040px;border: 0.5px solid #DDDDDD;margin: auto;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+em,i{font-style: normal;}
+a{text-decoration: none;color: #333333;}
+
+/*头部*/
+.usher_header{width: 1440px;height: 80px;background: #FFFFFF;}
+.usher_header .usher_header_center{width: 1200px;margin: auto;overflow: hidden;}
+.usher_header .usher_header_center>img{width: 112px;height: 30px;margin: 25px 0;float: left;}
+.usher_header .usher_header_center h6{font-size: 18px;color: #333333;float: left;height: 40px;line-height: 40px;border-left: 1px solid #DDDDDD;margin: 20px 10px;padding-left: 20px;}
+.usher_header .usher_header_center .header_right{float: right;height: 30px;margin: 25px 20px 25px 0px;}
+.usher_header .usher_header_center .header_right p{display: inline-block;cursor: pointer;padding: 4px 7px;margin-left: 20px;}
+.usher_header .usher_header_center .header_right .loginOut:hover{background: #EFF1F2;border-radius: 4px;}
+.usher_header .usher_header_center .header_right p img{float: left;margin-right: 10px;}
+.usher_header .usher_header_center .header_right p span{display: inline-block;height: 20px;line-height: 20px;font-size: 14px;color: #333333;}
+.usher_header .usher_header_center .header_right .userInfor img{margin-top: -4px;}
+
+
+.usher_content{background: #F6F8F9;}
+.usher_content_center{width: 1200px;margin: auto;padding-top: 10px;overflow: hidden;}
+/*左侧菜单*/
+.usher_content_center_left{width: 120px;float: left;}
+.usher_content_center_left ul li{font-size: 14px;padding:0 18px;cursor: pointer;}
+.usher_content_center_left ul li a{display: inline-block;height: 40px;line-height: 40px;}
+.usher_content_center_left ul li:hover{background: #EFF1F2;}
+.usher_content_center_left ul i{display: block;width: 84px;margin: 10px 18px;border-bottom: 1px solid #DDDDDD;}
+
+/*轮播图设置*/
+.usher_content_center_right{width: 1040px;float: left;padding: 0 20px;}
+.usher_content_center_right .right_navigationBar{overflow: hidden;height: 35px;padding-top: 5px;}
+.usher_content_center_right .right_navigationBar h3{font-size: 18px;color: #333333;line-height: 35px;float: left;}
+.usher_content_center_right .right_navigationBar #filePicker .webuploader-pick{padding: 0;width: 100px;height: 30px;margin-top: 0px;background: url(../img/btn_long_n.png);text-align: center;line-height: 30px;font-size: 14px;float: right;}
+.usher_content_center_right .img_set{height: 650px;}
+.usher_content_center_right .img_set .tishi{font-size: 14px;color: #999999;margin: 10px 0;}
+.usher_content_center_right #fileList{overflow: hidden;padding-top: 15px;padding-left: 10px;}
+.usher_content_center_right #fileList .file-item{display: inline-block;width: 180px;height: 238px;padding:12px 10px 0 10px;background: #FFFFFF;float: left;position: relative;margin-right: 6px;margin-bottom: 20px;}
+.usher_content_center_right #fileList .file-item img{width: 180px;height: 182px;display: inline-block;}
+.usher_content_center_right #fileList .file-item>div{overflow: hidden;margin: 15px 0;}
+.usher_content_center_right #fileList .file-item .del_img{width: 20px;height: 20px;display: inline-block;background: url(../img/icon_delete_n.png);float: right;margin-right: 25px;cursor: pointer;position: absolute;right: 8px;bottom: 9px;}
+.usher_content_center_right #fileList .file-item .del_img:hover{background: url(../img/icon_delete_s.png);}
+.usher_content_center_right #fileList .file-item>i{display: inline-block;display: none;}
+.usher_content_center_right #fileList .file-item>.hintlong{width: 50px;height: 18px;background: url(../img/icon_hintlong_n.png);position: absolute;left: 75px;bottom: 30px;}
+.usher_content_center_right #fileList .file-item>.hintshort{width: 30px;height: 18px;background: url(../img/icon_hintshort_n.png);position: absolute;left: 142px;bottom: 30px;}
+.usher_content_center_right .img_save{display: block;width: 100px;height: 30px;background: url(../img/btn_long_n.png);color: #FFFFFF;border: none;outline: none;margin: auto;cursor: pointer;}
+.usher_content_center_right .img_save:hover{background: url(../img/btn_long_s.png);}
+
+/*离线语音设置*/
+.usher_content_center_right .right_navigationBar .speech_navigationBtn{float: right;}
+.usher_content_center_right  .speech_navigationBtn a{display: inline-block;width: 100px;height: 30px;text-align: center;line-height: 30px;margin-left: 15px;font-size: 14px;}
+.usher_content_center_right  .speech_navigationBtn .speech_del{background: url(../img/btn_gray_n.png);color: #999999;}
+.usher_content_center_right  .speech_navigationBtn .speech_del:hover{background: url(../img/btn_gray_s.png);}
+.usher_content_center_right  .speech_navigationBtn .speech_build{background: url(../img/btn_long_n.png);color: #FFFFFF;}
+.usher_content_center_right  .speech_navigationBtn .speech_build:hover{background: url(../img/btn_long_s.png);}
+.usher_content_center_right .speech_QA{width: 1040px;padding-top: 20px;}
+.usher_content_center_right .speech_QA .q_a{min-height: 70px;background: #FFFFFF;margin-bottom: 10px;padding: 30px 25px;overflow: hidden;}
+.usher_content_center_right .speech_QA .q_a_left{float: left;width: 515px;}
+.usher_content_center_right .speech_QA .q_a_left .question,.usher_content_center_right .speech_QA .q_a_left .answer{line-height: 30px;float: left;}
+.usher_content_center_right .speech_QA .q_a_left .question{margin-bottom: 10px;}
+.usher_content_center_right .speech_QA .q_a_left span{width: 480px;display: block;}
+.usher_content_center_right .speech_QA .q_a_left>i{float: left;line-height: 30px;}
+.usher_content_center_right .speech_QA .q_a_left>div>i{float: left;line-height: 30px;}
+.usher_content_center_right .speech_QA .q_a_left>div{overflow: hidden;}
+.usher_content_center_right .speech_QA .q_a_right{float: right;}
+.usher_content_center_right .speech_QA .q_a_right a{display: block;width: 80px;height: 30px;color: #508DF7;background: url(../img/btn_shortwire_n.png);line-height: 30px;text-align: center;font-size: 14px;}
+.usher_content_center_right .speech_QA .q_a_right a:hover{background: url(../img/btn_shortmassive_n.png);color: #FFFFFF;}
+.usher_content_center_right .speech_QA .q_a_right .q_aEdit{margin-bottom: 10px;}
+.usher_content_center_right .speech_QA .q_a_right .q_aDelete{}
+
+/*删除弹窗*/
+.del_modal{width: 100%;height: 100%;position: absolute;left: 0;top: 0;display: none;}
+.del_modal .modal_back{width: 100%;height: 100%;background: #333333;opacity: 0;}
+.del_modal .modal_center{width: 280px;height: 130px;background: #000000;opacity: 0.7;border-radius: 4px;position: absolute;left: 50%;top: 50%;margin-left: -140px;margin-top: -65px;}
+.del_modal .modal_center .modal_header{height: 10px;padding: 10px 20px;}
+.del_modal .modal_center .modal_header span{display: inline-block;width: 10px;height: 10px;background: url(../img/icon_closewindow_n.png);float: right;cursor: pointer;}
+.del_modal .modal_center .modal_header span:hover{background: url(../img/icon_closewindow_s.png);}
+.del_modal .modal_center .modal_body{color: #FFFFFF;font-size: 18px;height: 40px;padding: 5px 20px;}
+.del_modal .modal_center .modal_footer{height: 50px;line-height: 50px;padding: 0 20px;color: #FFFFFF;font-size: 14px;}
+.del_modal .modal_center .modal_footer span{display: inline-block;float: right;margin-left: 20px;cursor: pointer;}
+.del_modal .modal_center .modal_footer span:hover{color: #508DF7;}
+
+/*创建语音*/
+.usher_content_center_right .speech_QA .q_a_build{min-height: 90px;width: 700px;}
+.q_a_build input{width: 510px;height: 30px;border: none;outline: none;border-bottom: 1px solid #DDDDDD;font-size: 16px;float: left;}
+.q_a_build i.delImg{background: url(../img/btn_icon_delete_n.png);display: inline-block;width: 20px;height: 20px;vertical-align: middle;margin-left: 10px;margin-top: 5px;cursor: pointer;float: left;}
+.q_a_build i.delImg:hover{background: url(../img/btn_icon_delete_s.png);}
+.usher_content_center_right .speech_QA .q_a_build div.question{margin-bottom: 25px;}
+.usher_content_center_right .speech_QA .q_a_build div>p{margin-bottom: 10px;overflow: hidden;}
+.usher_content_center_right .speech_QA .q_a_build button{width: 100px;height: 30px;float: left;border: none;outline: none;cursor: pointer;background: url(../img/btn_long_n.png);color: #FFFFFF;font-size: 14px;margin-left: 20px;}
+.usher_content_center_right .speech_QA .q_a_build button:hover{background: url(../img/btn_long_s.png);}
+.build_btn{width: 230px;margin:50px auto 0;}
+.build_btn a{width: 100px;height: 30px;display: inline-block;font-size: 14px;text-align: center;line-height: 30px;border: none;outline: none;cursor: pointer;}
+.build_btn a.cancel{background: url(../img/btn_gray_n.png);color: #999999;margin-right: 25px;}
+.build_btn a.cancel:hover{background: url(../img/btn_gray_s.png);}
+.build_btn a.save{background: url(../img/btn_long_n.png);color: #FFFFFF;}
+.build_btn a.save:hover{background: url(../img/btn_long_s.png);}
+
+
+
+
+
+
+
+
+
+
+

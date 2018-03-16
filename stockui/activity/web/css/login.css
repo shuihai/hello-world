@@ -1,0 +1,46 @@
+*{margin: 0;padding: 0;}
+html,body{font-size: 18px;height: 100%;background: #F0F4FB;position: relative;min-width: 1280px;min-height: 800px;}
+a{text-decoration: none;}
+ul,dl,li{list-style: none;}
+
+/*登录页*/
+.login{width: 100%;margin: 0 auto;}
+.login .login_title{font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 28px;color: #39476C;font-weight: normal;height: 100px;line-height: 100px;padding-left: 100px;}
+.login .loginContent{position: relative;width: 100%;height: 580px;background: url(../img/login_bg.png);background-size: cover;-ms-behavior: url(../css/backgroundsize.min.htc);behavior: url(../css/backgroundsize.min.htc);}
+.login .loginContent .login_center{width: 460px;height: 445px;margin-left: 15%;margin-top: 5%;float: left;}
+.login .loginContent .login_box{width: 370px;height: 340px;position: absolute;margin-top: 130px;left: 70%;background: #d0e5ff;background-size: cover;-ms-behavior: url(../css/backgroundsize.min.htc);behavior: url(../css/backgroundsize.min.htc);}
+.login .loginContent .login_box .login_box_title{font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 24px;color: #39476C;font-weight: normal;height: 60px;line-height: 46px;padding-left: 20px;margin-bottom: 35px;background: url(../img/login_box_bg_blue@2x.png) no-repeat;background-size: cover;-ms-behavior: url(../css/backgroundsize.min.htc);behavior: url(../css/backgroundsize.min.htc);}
+.login .loginContent .login_box .login_box_title_span{font-family: ArialMT;font-size: 12px;color: #39476C;position: absolute;left: 20px;top: 38px;}
+.login .loginContent .login_box .login_input{width: 320px;height: 50px;margin:0 auto;overflow: hidden;background: #e1eeff;margin-top: 10px;border-radius: 5px;box-shadow: 0 2px 6px 0 rgba(88,88,88,0.44);}
+.login .loginContent .login_box .login_img{width: 20px;height: 25px;margin: 15px 20px;float: left;}
+.login .loginContent .login_box .login_inp{width: 230px;height: 30px;line-height: 30px;background: #e1eeff;color: #333333;float: left;margin-top: 12px;border: none;border-left: 2px solid #575967;outline: none;cursor: pointer;font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 18px;padding-left: 15px;}
+.login .loginContent .login_box .login_label{height: 30px;line-height: 30px;font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 18px;color: #9B91AE;position: absolute;left: 100px;cursor: pointer;}
+.login .loginContent .login_box .label_user{top: 106px;}
+.login .loginContent .login_box .label_code{top: 166px;}
+.login .loginContent .login_box .login_zhuce{width: 320px;margin:0 auto;line-height: 50px;overflow: hidden;}
+.login .loginContent .login_box .login_zhuce>a{font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 18px;color: #9B91AE;margin-left: 245px;}
+.login .loginContent .login_box .login_btn{width: 326px;height: 60px;display: block;margin: auto;border: none;outline: none;cursor: pointer;background: url(../img/btn_login.png) no-repeat;background-size: cover;-ms-behavior: url(../css/backgroundsize.min.htc);behavior: url(../css/backgroundsize.min.htc);}
+.login .loginContent .login_box .login_btn:hover{background: url(../img/btn_login_selected.png) no-repeat;background-size: cover;}
+.login .login_bottom{width: 100%;position: absolute;bottom: 50px;}
+.login .login_bottom p{font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 14px;color: #999999;letter-spacing: 0.17px;line-height: 24px;text-align: center;}
+
+/*找回密码*/
+.index_header{width: 1200px;height: 60px; background: #FFFFFF; box-shadow: 0px 2px 5px rgba(97,107,136,0.17); border-bottom: 1px solid #eaeaea; }
+.indexLogo{ width:200px; height: 60px;}
+.indexTitle{height: 60px; line-height: 60px;font: 16px/20px "Arial","微软雅黑",HELVETICA; font-size: 20px;color: #616B88;padding: 0;}
+.register{width: 1200px;min-height: 870px;background: #f7f9fd;box-shadow: 0 2px 9px 2px rgba(97,107,136,0.17);}
+.register .register_title{font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 20px;color: #616B88;line-height: 60px;margin: 0 20px;border-bottom: 1px solid #616B88;}
+.register_form{margin: 0 20px;padding: 30px 0;border-bottom: 1px solid #616B88;height: 656px;}
+.register_form .form-control{background: #FFFFFF;border: 1px solid #CBD4E7;width: 350px;height: 40px;border-radius: 0;font: 16px/20px "Arial","微软雅黑",HELVETICA;font-size: 16px;}
+.register_form .control-label{width: 420px;text-align: right;padding-top: 11px;font-weight: normal;font-family: PingFangSC-Regular;font-size: 16px;color: #616B88;}
+.register_form .error_prompt{height: 30px;line-height: 30px;font-family: PingFangSC-Regular;font-size: 16px;color: #A40001;}
+.register_btn{width: 200px;height: 36px;background: url(../img/sure200.png);border: none;outline: none;color: #FFFFFF;font-size: 16px;display: block;margin: 30px auto;}
+.register_btn:hover{color: #FFFFFF;}
+.register_btn:focus{background: url(../img/sure200.png);border: none;outline: none;color: #FFFFFF;}
+.register_zhanghao{position: relative;font-family: PingFangSC-Regular;font-size: 16px;color: #666666;}
+.register_zhanghao>span{position: absolute;left: 60%;top: 15px;}
+.register_denglu{font-family: PingFangSC-Medium;font-size: 16px;color: #6A40BC;}
+.register_denglu:hover{color: #6A40BC;text-decoration: none;}
+#register_yzm{width: 190px;margin-right: 10px;}
+#code_button{width: 150px;font-size: 16px;color: #39476C;}
+.register_person{margin-top: 200px;}

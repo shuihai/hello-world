@@ -1,0 +1,330 @@
+#container {
+    color: #838383;
+    font-size: 12px;
+}
+
+.webuploader-element-invisible{ opacity: 0;}
+.cxuploder .queueList.filled {  
+    left: 0;
+}
+.cxuploder .queueList.webuploader-dnd-over {
+    border: 3px dashed #999999;
+}
+
+.cxuploder p {margin: 0;}
+
+.element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+
+.uploder-container{
+	margin-left: 10px;
+	float: left;
+    width: 150px;
+    height: 90px;
+    background: #F6F6F6;
+    position: relative;
+}
+
+.cxuploder .placeholder {
+    color: #cccccc;
+    position: relative;
+}
+
+.cxuploder .placeholder .webuploader-pick {
+	width: 150px;
+    font-size: 14px;
+    background: url(../img/img2.png);
+    *width: 150px;
+    height: 90px;
+    color: #333333;
+    display: inline-block;
+    margin: 0 auto;
+    cursor: pointer;
+    padding: 0;
+    z-index: 5;
+}
+
+.cxuploder .placeholder .flashTip {
+    color: #666666;
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+.cxuploder .placeholder .flashTip a {
+    color: #0785d1;
+    text-decoration: none;
+}
+
+.cxuploder .filelist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #F6F6F6;
+    position: absolute;
+    top: 0;
+}
+
+.cxuploder .filelist:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.cxuploder .filelist li {
+    width: 150px;
+    height: 90px;
+    text-align: center;
+    display: inline;
+    float: left;
+    position: absolute;
+    top: 0;
+}
+
+.cxuploder .filelist li p.log {
+    position: relative;
+    top: -45px;
+}
+
+.cxuploder .filelist li p.title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow : ellipsis;
+    top: 5px;
+    text-indent: 5px;
+    text-align: left;
+}
+
+.cxuploder .filelist li p.progress {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    overflow: hidden;
+    z-index: 50;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    -webkit-box-shadow: 0 0 0;
+}
+.cxuploder .filelist li p.progress span {
+    display: none;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    background: #1483d8 url(images/progress.png) repeat-x;
+
+    -webit-transition: width 200ms linear;
+    -moz-transition: width 200ms linear;
+    -o-transition: width 200ms linear;
+    -ms-transition: width 200ms linear;
+    transition: width 200ms linear;
+
+    -webkit-animation: progressmove 2s linear infinite;
+    -moz-animation: progressmove 2s linear infinite;
+    -o-animation: progressmove 2s linear infinite;
+    -ms-animation: progressmove 2s linear infinite;
+    animation: progressmove 2s linear infinite;
+
+    -webkit-transform: translateZ(0);
+}
+
+@-webkit-keyframes progressmove {
+    0% {
+       background-position: 0 0;
+    }
+    100% {
+       background-position: 17px 0;
+    }
+}
+@-moz-keyframes progressmove {
+    0% {
+       background-position: 0 0;
+    }
+    100% {
+       background-position: 17px 0;
+    }
+}
+@keyframes progressmove {
+    0% {
+       background-position: 0 0;
+    }
+    100% {
+       background-position: 17px 0;
+    }
+}
+
+.cxuploder .filelist li p.imgWrap {
+    z-index: 2;
+    line-height: 200px;
+    vertical-align: middle;
+    overflow: hidden;
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+
+    -webit-transition: 200ms ease-out;
+    -moz-transition: 200ms ease-out;
+    -o-transition: 200ms ease-out;
+    -ms-transition: 200ms ease-out;
+    transition: 200ms ease-out;
+}
+
+.cxuploder .filelist li p.imgWrap>img{
+	width: 67px;
+	height: 90px;
+	position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -33px;
+}
+
+.cxuploder .filelist li p.error {
+    background: #f43838;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 28px;
+    line-height: 28px;
+    width: 100%;
+    z-index: 100;
+}
+
+.cxuploder .filelist li .success {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    z-index: 200;
+    background: url(images/success.png) no-repeat right bottom;
+}
+.cxuploder .filelist div.file-panel {
+    height: 30px;
+    margin-top: 8px;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
+    width: 250px;
+   overflow: hidden;
+}
+
+.cxuploder .filelist div.file-panel span {
+   	width: 60px;
+    height: 30px;
+    line-height: 30px;
+    display: inline;
+    float: right;
+    background: #FFFFFF;
+    border: 1px solid #616B88;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cxuploder .filelist div.file-panel span.rotateLeft {
+    background-position: 0 -24px;
+}
+
+.cxuploder .filelist div.file-panel span.rotateRight {
+    background-position: -24px -24px;
+}
+
+.cxuploder .filelist div.file-panel span.cancel {
+    background-position: -48px -24px;
+}
+
+.cxuploder .statusBar {
+    height: 90px;
+    vertical-align: middle;
+    position: absolute;
+    z-index: 9;
+}
+
+.cxuploder .statusBar .progress {
+    border: 1px solid #1483d8;
+    width: 198px;
+    background: #fff;
+    height: 18px;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    color: #6dbfff;
+    position: relative;
+    margin: 0 10px 0 0;
+}
+.cxuploder .statusBar .progress span.percentage {
+    width: 0;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #1483d8;
+    position: absolute;
+}
+.cxuploder .statusBar .progress span.text {
+    position: relative;
+    z-index: 10;
+}
+
+.cxuploder .statusBar .info {
+    display: inline-block;
+    font-size: 14px;
+    color: #666666;
+}
+
+.cxuploder .statusBar .btns {
+   	
+}
+
+.cxuploder .statusBar .btns .jxfilepicker {
+    display: inline-block;
+    float: left;
+}
+
+.cxuploder .statusBar .btns .webuploader-pick,
+.cxuploder .statusBar .btns .uploadBtn,
+.cxuploder .statusBar .btns .uploadBtn.state-uploading,
+.cxuploder .statusBar .btns .uploadBtn.state-paused {
+    background: url(../img/img2.png);
+    *width: 150px;
+    width: 150px;
+    height: 90px;
+    color: #fff;
+    display: inline-block;
+    margin: 0 auto 20px auto;
+    cursor: pointer;
+    padding: 0;
+    float: left;
+}
+
+.cxuploder .statusBar .btns .uploadBtn {
+    background: #00b7ee;
+    color: #fff;
+    border-color: transparent;
+}
+
+.cxuploder .statusBar .btns .uploadBtn.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+.meeting_footer{width:98%;margin: 0px auto;position: absolute;bottom: 0; padding: 13px 0;  border-top: 1px #616B88 solid;border-top: 2px #ACB2C2 solid;}
+.meeting_footer>.meet_btn{width: 200px;height: 36px;display:block; font-size: 16px; text-align: center;line-height: 36px;background: url(../img/sure200.png) no-repeat;margin: auto;color: #FFFFFF;cursor: pointer;}
+.meeting_footer .meet_btn:hover{text-decoration: none;}
+.lou{height: 100%;padding: 0 7px;line-height: 30px;text-align: left; font-size: 16px;color: #333333;}
+
+
