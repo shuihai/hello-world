@@ -66,7 +66,6 @@ def testreg():
             matcher2 = re.findall(pattern2, str2)
             print matcher2[0]   # 打印出来
             sql = "select * from " + "xiaoming_gzh" + " where gzh_name='" + matcher2[0]+"'"
-            print sql
             cursor.execute("select * from " + "xiaoming_gzh" + " where gzh_name='" + matcher2[0]+"'"  )
             data = cursor.fetchone()
             if not data:
