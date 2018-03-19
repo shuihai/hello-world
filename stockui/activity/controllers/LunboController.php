@@ -22,88 +22,38 @@ class LunboController extends CommonController {
      */
     public function actionIndex() {
         $this->layout=FALSE;
-        $session = \Yii::$app->session;
-        $user_info = Yii::$app->user->identity;
-        $user_id = $user_info['user_id'];
-        if (Yii::$app->request->get('robot_id')) {
-            $session->set('robot_id', Yii::$app->request->get('robot_id'));
-        }
-        
-        if (!$session->get('robot_id')) {
-            $session->set('robot_id', Yii::$app->request->get('robot_id'));
-        }
-        $robot_id = $session->get('robot_id');
 
         $list = [];
-        $list = Yii::$app->db->createCommand('SELECT * FROM home_image  where user_id=:user_id  and robot_id=:robot_id  and status=1 order by id')
-                ->bindValues([':user_id' => $user_id, ':robot_id' => $robot_id])
+        $list = Yii::$app->db->createCommand('SELECT * FROM xiaoming_gzh  where  status=1 order by id')
+//                ->bindValues([ ])
                 ->queryAll();
  
 
-        return $this->render('index', ['list' => $list, 'user_id' => $user_id, 'robot_id' => $robot_id]);
+        return $this->render('index', ['list' => $list ]);
     }
 
-    public function actionAdd() {
-        $session = \Yii::$app->session;
-        $user_info = \Yii::$app->user->identity;
-        $user_id = $user_info['user_id'];
-        $robot_id = $session->get('robot_id');
-        $post = Yii::$app->request->post();
-         
-   
-        $connection = Yii::$app->db;
-        $transaction = $connection->beginTransaction();
-
-        //删除原来
-        $flag0 = $connection->createCommand('SELECT * FROM home_image WHERE user_id=:user_id and robot_id=:robot_id and status=1')
-                ->bindValues([':user_id' => $user_id, ':robot_id' => $robot_id])
-                ->queryScalar('id');
-
-        if ($flag0) {
-
-            $flag1 = $connection->createCommand('delete from home_image WHERE user_id=:user_id and robot_id=:robot_id')
-                    ->bindValues([':user_id' => $user_id, ':robot_id' => $robot_id])
-                    ->execute();
-        } else {
-            $flag1 = 1;
-        }
-
-        $flag2 = 1;
-
-        if (isset($post['img'])) {
-            foreach ($post['img'] as $key => $value) {
-
-                $flag3 = $connection->createCommand()->insert('home_image', [
-                            'sort' => $key,
-                            'image' => $value,
-                            'thumbnail' => substr($value,0, strpos($value, '.')) . 'small' . substr($value,strpos($value, '.') ),
-                            'status' => 1,
-                            'robot_id' => $robot_id,
-                            'user_id' => $user_id,
-                        ])->execute();
-
-
-                if (!$flag3) {
-                    $flag2 = 0;
-                }
-            }
-
-            if ($flag1 && $flag2) {
-                $transaction->commit();
-                return Json::encode(['code' => '1', 'info' => '添加成功']);
-            } else {
-                $transaction->rollBack();
-                return Json::encode(['code' => 0, 'info' => '新增失败']);
-            }
-        } else {
-            if ($flag1) {
-                $transaction->commit();
-                return Json::encode(['code' => '1', 'info' => '添加成功']);
-            } else {
-                $transaction->rollBack();
-                return Json::encode(['code' => 0, 'info' => '新增失败']);
-            }
-        }
+    public function actionShowgzh() {
+        $str=Yii::$app->request->get('gzh_name');
+//        echo 'http://weixin.sogou.com/weixin?type=1&s_from=input&query='.$str. '&ie=utf8&_sug_=n&_sug_type_=';die;
+        $this->redirect('http://weixin.sogou.com/weixin?type=1&s_from=input&query='.$str. '&ie=utf8&_sug_=n&_sug_type_=');
     }
+
+
+    public function actionStopguangzhu() {
+        $id = Yii::$app->request->post('id');
+
+            $res =  Yii::$app->db->createCommand('update `xiaoming_gzh` set `status`=0 where `id` = :id  ')
+                ->bindValues([':id' => $id])
+                ->execute();
+
+        if ($res   ) {
+            return Json::encode(['code' => 1, 'info' => '成功']);
+        }else{
+            return Json::encode(['code' => 0, 'info' => '操作失败']);
+        }
+
+
+    }
+
 
 }
