@@ -41,95 +41,84 @@ $this->render(
                 </div>
 
                 <!---->
+                <!--<div class="popular-public-list">-->
+                <!---->
+
+                <!--/-->
+                <!---->
                 <div class="popular-public-list">
-                    <!---->
-                    <div class="wrapper-col-left">
-                        <div class="mp-classify-title">分类</div>
-                        <div class="mp-classify-list">
-                            <ul>
-                                <li class="active"><a href="javascript:void(0);" data-tagid="35">分类甲</a></li>
-                                <li class=""><a href="javascript:void(0);" data-tagid="27">分类</a></li>
+                    <div class="mp-account-list">
+                        <table class="table">
+                            <colgroup>
+                                <col width="100"> 
+                                <col width="120">
+                                <col width="50">
+                                <col width="350">
+                                <col width="50">
+                                <col width="220">
+                        
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>排行</th>
+                                    <th class="text-left">公众号名称</th>
+                                    <th class="text-left">多或空</th>
+                                    <th>内容 </th>
+                                    <th>排序  </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rankBody">
 
 
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/-->
-                    <!---->
-                    <div class="wrapper-col-right">
-                        <div class="mp-account-list">
-                            <table class="table">
-                                <colgroup>
-                                    <col width="100">
-                                    <col>
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="140">
-                                </colgroup>
-                                <thead>
+                                <?php foreach ($list as $key => $value) { ?>
+
                                     <tr>
-                                        <th>排行</th>
-                                        <th class="text-left">公众号</th>
-                                        <th>观点评论数  </th>
-                                        <th>首小时阅读  
-                                        </th>
-
-
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rankBody">
-
-
-                                    <?php foreach ($list as $key => $value) { ?>
-
-                                        <tr>
-                                            <td>
-                                                <span class="table-rank table-rank1 "><?= $key + 1 ?></span>
-                                            </td>
-                                            <td>
-                                                <div class="media-list">
-                                                    <div class="item-media">
-                                                        <a>
-                                                            <img class="lazy"
-                                                                 data-original="http://cdnlogo.xiguaji.com/BizLogo/MzI1MzAwODMyMQ==.jpg-BizLogoCut"
-                                                                 src="http://thirdwx.qlogo.cn/mmopen/Q3auHgzwzM4NGEndWFTMNgM8E5rMicItrr3ia7JlS4giciajr8uyrCZ4ALPWF8funPd82aaFj8ywbMD0BvlhXgibgkxYDcpRiaEzeKXg9dAxFAXQg/132"
-                                                                 style="display: inline;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="item-inner">
-                                                        <div class="item-title"><a
-                                                                href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
-                                                                class=""><?= $value['gzh_name'] ?></a></div>
-                                                        <div class="item-sub-title">kuwoxiaobei</div>
-                                                    </div>
+                                        <td>
+                                            <span class="table-rank table-rank1 "><?= $key + 1 ?></span>
+                                        </td>
+                                        <td>
+                                            <div class="media-list">
+                                                <div class="item-media">
+                                                    <a>
+                                                        <img class="lazy"
+                                                             data-original="http://cdnlogo.xiguaji.com/BizLogo/MzI1MzAwODMyMQ==.jpg-BizLogoCut"
+                                                             src="http://thirdwx.qlogo.cn/mmopen/Q3auHgzwzM4NGEndWFTMNgM8E5rMicItrr3ia7JlS4giciajr8uyrCZ4ALPWF8funPd82aaFj8ywbMD0BvlhXgibgkxYDcpRiaEzeKXg9dAxFAXQg/132"
+                                                             style="display: inline;">
+                                                    </a>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark",  'time' => $time, 'gzh_id' => $value['id']]) ?>" class=""><?= $value['number'] ?></a>
-                                            </td>
+                                                <div class="item-inner">
+                                                    <div class="item-title"><a   href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"    class=""><?= $value['gzh_name'] ?></a></div>
+                                                    <div class="item-sub-title">kuwoxiaobei</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?php echo $value['duokong'] ? '多' : '空'; ?> 
+                                        </td>
+                                        <td>
+                                            <textarea><?= $value['content']; ?>  </textarea>
+                                        </td>
+                                        <td>
+                                            <input value="<?= $value['sort']; ?>" />   
+                                        </td>
 
+                                        <td>
 
-                                            <td><a  href="javascript:;"   onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>&nbsp;&nbsp; </td>
-                                            <td>
+                                            <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
+                                            <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
+                                            <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
+                                        </td>
+                                    </tr>
 
-                                                <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
-                                                <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
-                                                <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
-                                            </td>
-                                        </tr>
+                                <?php } ?>
 
-                                    <?php } ?>
-
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                    <!--/-->
                 </div>
+                <!--/-->
+                <!--</div>-->
                 <!--/-->
             </div>
 
@@ -187,14 +176,13 @@ $this->render(
     </form>
 </div>
 <style>
-    #pinglun {
-        margin: 0px;
-        height: 90px;
-        width: 300px;
-    }
-    #end_time{
-        margin: 0px; 
-        width: 300px;
+    textarea {
+        border-bottom: none;
+        border-top:  none;
+        border-left:1px dashed #89a;
+        border-right:1px dashed  #89a;
+        width: 350px;
+        height:100px;
     }
 </style>
 <script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>

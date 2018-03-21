@@ -8,146 +8,335 @@ use yii\helpers\Url;
 
 
 
-<link rel="stylesheet" type="text/css" href="../js/cxuploader.css"/>
-<link rel="stylesheet" type="text/css" href="../js/webuploader/webuploader.css"/>
-<div id="usher">
-
-    <?=
-    $this->render(
-            '../layouts/header.php'
-    )
-    ?>
+<!--sidebar-->
+<?=
+$this->render(
+        '../layouts/robot_left.php'
+)
+?>
 
 
-    <div class="usher_content">
-        <div class="usher_content_center">
-            <?=
-            $this->render(
-                    '../layouts/robot_left.php'
-            )
-            ?>
-            <div class="usher_content_center_right">
-                <div class="right_navigationBar">
-                    <h3>轮播图设置</h3>
-                    <div id="filePicker">上传轮播图片</div>
+<!--/sidebar-->
+<!--main-->
+
+
+<div class="main">
+
+
+    <div class="main-content">
+        <!--topbar-->
+
+        <!--/topbar-->
+        <div id="content" style="opacity: 1;">
+            <div class="wrapper wrapper-no-gap">
+
+                <div class="mp-user-article-timer clearfix">
+                    <div class="control-select-with-nav">
+
+                        <input type="text" class="form_input" id="start_time"  name="date"  value="" placeholder="请选择日期">
+                        <a  id="hehe" class="btn btn-success"  >  切换日期</a>
+
+                    </div>
+
                 </div>
-                <hr />
-                <div class="img_set">
-                    <p class="tishi">最多上传10张图片,图片尺寸要求为894X908，大小在2M以内，格式为jpg、jpeg、png、bmp</p>
-                    <div id="uploader-demo">
-                        <div id="fileList" class="uploader-list">
-                            <?php foreach ($list as $key => $value) { ?>
-                            <div id="old_<?=  $value['id'] ?>" class="file-item thumbnail upload-state-done"><img src="<?= \Yii::getAlias('@hotel') . '/' . $value['image'] ?>">
-                                <div class="uploder-container">
-                                    <div class="cxuploder">
-                                        <div class="queueList">
-                                            <div class="placeholder">
-                                                <div class="filePicker webuploader-container">
-                                                    <div class="webuploader-pick">
 
-                                                    </div>
-                                                    <div id="rt_rt_1c7qini1igs3196v1nohvvj1oc17" style="position: absolute; top: 25px; left: 80px; width: 20px; height: 20px; overflow: hidden; bottom: auto; right: auto;"><input type="file" name="file" class="webuploader-element-invisible" accept="image/jpg,image/jpeg,image/png,image/bmp"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <ul class="filelist">
+                <!---->
+                <div class="popular-public-list">
+                    <!---->
+                    <div class="wrapper-col-left">
+                        <div class="mp-classify-title">分类</div>
+                        <div class="mp-classify-list">
+                            <ul>
+                                <li class="active"><a href="javascript:void(0);" data-tagid="35">分类甲</a></li>
+                                <li class=""><a href="javascript:void(0);" data-tagid="27">分类</a></li>
 
-                                            </ul>
-                                        </div>
-                                        <div class="statusBar" style="display:none;">
-                                            <div class="btns">
-                                                <div class="jxfilePicker webuploader-container">
-                                                    <div class="webuploader-pick"></div>
-                                                    <div id="rt_rt_1c7qini1jcklg49dtklb31eqqa" style="position: absolute; top: 0px; left: 0px; width: 20px; height: 20px; overflow: hidden; bottom: auto; right: auto;">
-                                                        <input type="file" name="file" class="webuploader-element-invisible" accept="image/jpg,image/jpeg,image/png,image/bmp">
-                                                        <label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="del_img" onclick="removeFile2('old_<?=  $value['id'] ?>')"></span><i class="hintlong" style="display: none;"></i>
-                                <i class="hintshort"></i>
-                            </div>
-                            <?php } ?>  
 
+                            </ul>
                         </div>
                     </div>
+                    <!--/-->
+                    <!---->
+                    <div class="wrapper-col-right">
+                        <div class="mp-account-list">
+                            <table class="table">
+                                <colgroup>
+                                    <col width="100">
+                                    <col>
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="140">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>排行</th>
+                                        <th class="text-left">公众号</th>
+                                        <th>观点评论数  </th>
+                                        <th>首小时阅读  
+                                        </th>
+
+
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rankBody">
+
+
+                                    <?php foreach ($list as $key => $value) { ?>
+
+                                        <tr>
+                                            <td>
+                                                <span class="table-rank table-rank1 "><?= $key + 1 ?></span>
+                                            </td>
+                                            <td>
+                                                <div class="media-list">
+                                                    <div class="item-media">
+                                                        <a>
+                                                            <img class="lazy"
+                                                                 data-original="http://cdnlogo.xiguaji.com/BizLogo/MzI1MzAwODMyMQ==.jpg-BizLogoCut"
+                                                                 src="http://thirdwx.qlogo.cn/mmopen/Q3auHgzwzM4NGEndWFTMNgM8E5rMicItrr3ia7JlS4giciajr8uyrCZ4ALPWF8funPd82aaFj8ywbMD0BvlhXgibgkxYDcpRiaEzeKXg9dAxFAXQg/132"
+                                                                 style="display: inline;">
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title"><a
+                                                                href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
+                                                                class=""><?= $value['gzh_name'] ?></a></div>
+                                                        <div class="item-sub-title">kuwoxiaobei</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark", 'id' => $value['id'], 'time' => $time]) ?>" class=""><?= $value['number'] ?></a>
+                                            </td>
+
+
+                                            <td><a  href="javascript:;"   onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>&nbsp;&nbsp; </td>
+                                            <td>
+
+                                                <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
+                                                <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
+                                                <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
+                                            </td>
+                                        </tr>
+
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/-->
                 </div>
-                <button class="img_save">保存</button>
+                <!--/-->
             </div>
+
+
+
         </div>
     </div>
-    <form id="form">
-        <input type="hidden" id="user_id" value="<?= Html::encode($user_id) ?>"/>
-        <input type="hidden" id="robot_id" value="<?= Html::encode($robot_id) ?>"/>
-        <?php foreach ($list as $key => $value) { ?>
-            <input type="hidden" name="img[]" value="<?= Html::encode($value['image']) ?>" class="old_<?= Html::encode($value['id']) ?> hehe">
-        <?php } ?>  
-    </form>
+</div>
+<!--/main-->
 
+<!-- Dynamic Modal -->
+<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
+<div class="modal fade" id="remoteModalAttention" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
 </div>
 
-<script src="../js/jq1.11.2.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/webuploader/webuploader.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/slimscroll/jquery.slimscroll.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
-<!--s<script src="../js/cxuploader.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="../js/index.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
+<div id="add_type" class="layer_robot " style="display: none;">
+    <form id="form_submit_type"  role="form" class="form-horizontal col-md-10">
+        <div class="form-group" style="margin-top: 20px">
+            <div class="col-md-3">
+                <label>日期</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form_input" id="end_time"  name="date"  value="" placeholder="请选择日期">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>多空选项</label>
+            </div>
+            <div class="col-md-9">
+                <input type="radio" class="form_input" id="duokong"  name="duokong"  value="1"  >看多
+                <input type="radio" class="form_input" id="duokong"  name="duokong"  value="0"  >看空
 
- 
-    window.server= '<?= \yii\helpers\Url::toRoute(['uploadimg/img']) ?>';
-    
- 
-    
-    $("body").on('click',".placeholder",function( ){
-        
-        window.file_id=$(this).parents('.upload-state-done').attr('id')    
-        console.log(window.file_id)
-    });
-    
-    $("body").on('click',".statusBar",function( ){
-        
-        window.file_id=$(this).parents('.upload-state-done').attr('id')    
-        console.log(window.file_id)
-    });
-    
-    function removeFile2( fileid ) {
-        var $li = $('#'+fileid);
-        $li.remove();
-            
-        $li2 = $('.'+fileid);
-        $li2.remove();
-            
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>内容</label>
+            </div>
+            <div class="col-md-9">
+                <textarea id="pinglun" name="content"> </textarea>
+
+            </div>
+        </div>
+        <input type="hidden" id="gzh_id" name="gzh_id">
+    </form>
+</div>
+<style>
+    #pinglun {
+        margin: 0px;
+        height: 90px;
+        width: 300px;
     }
-     
- 
-
-
-    //保存
-    $(".img_save").click(function(){
-        if($("#fileList>.file-item").length > 10){
-            layer.msg("最多上传十张图片");
-            return false;
-        }
-        
-        $.ajax({
-            url:'<?= \yii\helpers\Url::toRoute(["add", 'robot_id' => $robot_id]) ?>',
-            type:'post',
-            data:$('#form').serialize(),
-            success:function (data) {
-                data = JSON.parse(data);
-                if(data['code'] == 1){
-                    window.location.reload();
-                }else {
-                    alert(data['info']);
-                }
+    #end_time{
+        margin: 0px; 
+        width: 300px;
+    }
+</style>
+<script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
+<script src="../js/layer/layer.js"></script>
+<script src="../js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    $('#hehe').click(function(){
+        search = $('#start_time').val();
+        url = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>?time="+search;
+        window.location.href = url;
+                
+    })
+                        
+                        
+    function addType(id){
+        $("#robottype_type_name").val(id);
+        $("#robottype_type_code").val("");
+        $("#robottype_type_code").attr("disabled",false);
+        layer.open({
+            type: 1,
+            title: "新增公众号评论",
+            closeBtn: 1,
+            btn:['确定','取消'],
+            area:['450px','280px'],
+            content: $("#add_type"),
+            yes: function(){
+                           
+                $.ajax({
+                    url:'<?= \yii\helpers\Url::toRoute("/robot-type/typecreate") ?>',
+                    type:'post',
+                    data:$('#form_submit_type').serialize(),
+                    success:function (data) {
+                        data = JSON.parse(data);
+                        if(data['code'] == 0){
+                            //console.log(data['info']);
+                            layer.msg(data['info']);
+                        }else if(data['code'] == 1){
+                            window.location = data['url'];
+                        }
+                    }
+                });
             }
         });
-    })
- 
+    }
 
-		
 </script>
+
+<script>
+    //            $('#start_time').change(function(){
+    //                alert(1);
+    //                
+    //            })
+            
+            
+            
+            
+    function stopguangzhu (id){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute(["stopguangzhu"]) ?>',
+            type:'post',
+            data:{'id': id },
+            success:function (data) {
+                data = JSON.parse(data);
+
+                if(data['code'] == 1){
+
+                    window.location.reload();
+                }else {
+                    layer.msg(data['info']);
+                }
+
+            }
+        });
+    }
+
+
+    function addType(remark_id){ 
+        $("#gzh_id").val(remark_id);
+        $("#robottype_type_name").val("");
+        $("#robottype_type_code").val("");
+        $("#robottype_type_code").attr("disabled",false);
+        layer.open({
+            type: 1,
+            title: "新建评论",
+            closeBtn: 1,
+            btn:['确定','取消'],
+            area:['450px','350px'],
+            content: $("#add_type"),
+            yes: function(){
+ 
+                $.ajax({
+                    url:'<?= \yii\helpers\Url::toRoute(["/lunbo/update"]) ?>',
+                    type:'post',
+                    data:$('#form_submit_type').serialize(),
+                    success:function (data) {
+                        data = JSON.parse(data);
+                        if(data['code'] == 0){
+                            //console.log(data['info']);
+                            layer.msg(data['info']);
+                        }else if(data['code'] == 1){
+                            window.location.href = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>";
+                        }
+                    }
+                });
+            }
+        });
+    }
+    
+    var start = {
+        elem: "#start_time",
+        //                min: laydate.now(0, "YYYY-MM-DD"),
+        format: "YYYY-MM-DD",
+        istime: false
+    };
+    var end = {
+        elem: "#end_time",
+        min: laydate.now(0, "YYYY-MM-DD"),
+        format: "YYYY-MM-DD",
+        istime: false
+    };
+    laydate(start);
+    laydate(end);
+    
+    function hehe(){
+        if($('#end_time').val()!=''){
+            if($('#start_time').val()<=$('#end_time').val()){
+           
+                return true;
+            }else{
+                layer.alert('时间选择有误 : 开始时间大于结束时间!')
+                return false;
+            }
+        }
+
+    }
+    
+</script>
+<!-- /.modal -->
+
+
+
+<script src="http://zs.xiguaji.com/Content/js/plugin/notify/jquery.growl.js"></script>
+<script src="http://zs.xiguaji.com/Content/js/jquery-ui-1.9.2.min.js"></script>
+
+<script src="http://zs.xiguaji.com/Content/js/bootstrap.min.js"></script>
