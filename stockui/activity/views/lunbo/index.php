@@ -101,7 +101,7 @@ $this->render(
                                                         </a>
                                                     </div>
                                                     <div class="item-inner">
-                                                        <div class="item-title"><a
+                                                        <div class="item-title"><a  target="_blank" 
                                                                 href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
                                                                 class=""><?= $value['gzh_name'] ?></a></div>
                                                         <div class="item-sub-title">kuwoxiaobei</div>
