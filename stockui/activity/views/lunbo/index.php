@@ -101,7 +101,7 @@ $this->render(
                                                         </a>
                                                     </div>
                                                     <div class="item-inner">
-                                                        <div class="item-title"><a  target="_blank" 
+                                                        <div class="item-title"><a  target="_blank"
                                                                 href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
                                                                 class=""><?= $value['gzh_name'] ?></a></div>
                                                         <div class="item-sub-title">kuwoxiaobei</div>
@@ -113,7 +113,9 @@ $this->render(
                                             </td>
 
 
-                                            <td><a  href="javascript:;"   onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>&nbsp;&nbsp; </td>
+                                            <td>
+                                                <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >已阅</span></a>
+                                                &nbsp; </td>
                                             <td>
 
                                                 <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>

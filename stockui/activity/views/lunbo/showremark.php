@@ -105,7 +105,7 @@ $this->render(
 
                                         <td>
 
-                                            <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
+                                            <a  href="javascript:;"  class="btn btn-danger" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="删除" aria-label="删除" data-pjax="0"><span >删除</span></a>
                                             <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
                                             <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
                                         </td>
