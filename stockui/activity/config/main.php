@@ -1,22 +1,23 @@
 <?php
 
 $params = array_merge(
-        require __DIR__ . '/../../common/config/params.php',
-    require __DIR__ . '/../../common/config/params-local.php',
-        require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require __DIR__ . '/../../common/config/params.php',
+//    require __DIR__ . '/../../common/config/params-local.php',
+    require __DIR__ . '/params.php'
+//    require __DIR__ . '/params-local.php'
 );
 
 return [
     'id' => 'app-activity',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'lunbo/index',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'activity\controllers',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-activity',
-             'cookieValidationKey' => 'true',     //  就是这里了
-       
+            'cookieValidationKey' => 'true',     //  就是这里了
+
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -33,8 +34,8 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                ],
             ],
-        ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -48,7 +49,7 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ],
- 
+
     ],
     'params' => $params,
 ];
