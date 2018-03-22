@@ -34,7 +34,15 @@ $this->render(
                     <div class="control-select-with-nav">
 
                         <input type="text" class="form_input" id="start_time"  name="date"  value="<?= $time ?>" placeholder="请选择日期">
-                        <a  id="hehe" class="btn btn-success"  >  切换日期</a>
+                        <select type="text" class="form_input" id="remarktype"   name="type" style="margin-right: 10px">
+                            <option value="0" >选择类型</option>
+                            <option value="0"  >多空观点</option>
+                            <option value="1"  >操作计划</option>
+                            <option value="2"  >其他</option>
+                        </select>
+
+
+                        <a  id="hehe" class="btn btn-success"  > 搜索</a>
 
                     </div>
 
@@ -51,20 +59,22 @@ $this->render(
                         <table class="table">
                             <colgroup>
                                 <col width="100"> 
+                                <col width="150">
                                 <col width="120">
                                 <col width="50">
                                 <col width="350">
                                 <col width="50">
                                 <col width="220">
-                        
+
                             </colgroup>
                             <thead>
                                 <tr>
                                     <th>排行</th>
-                                    <th class="text-left">公众号名称</th>
-                                    <th class="text-left">多或空</th>
+                                    <th class="">公众号名称</th>
+                                    <th class="">日期</th>
+                                    <th class="">多或空</th>
                                     <th>内容 </th>
-                                    <th>排序  </th>
+                                    <th >排序  </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -93,25 +103,29 @@ $this->render(
                                                 </div>
                                             </div>
                                         </td>
+                                        <td> <?= $value['date']; ?>    </td>
                                         <td>
-                                            <?php echo $value['duokong'] ? '多' : '空'; ?> 
+                                            <?php if ($value['type'] == 0) {
+                                                echo $value['duokong'] ? '多' : '空';
+                                            } else {
+                                                echo '∅';
+                                            } ?> 
                                         </td>
                                         <td>
-                                            <textarea><?= $value['content']; ?>  </textarea>
+                                            <textarea  idnum="<?= $value['id']; ?>"><?= $value['content']; ?>  </textarea>
                                         </td>
                                         <td>
-                                            <input value="<?= $value['sort']; ?>" />   
+                                            <input value="<?= $value['sort']; ?>"  style="width:50px" class="sort"  idnum="<?= $value['id']; ?>" />   
                                         </td>
 
                                         <td>
 
-                                            <a  href="javascript:;"  class="btn btn-danger" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="删除" aria-label="删除" data-pjax="0"><span >删除</span></a>
-                                            <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
-                                            <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
+                                            <a  href="javascript:deleteType(<?= $value['id'] ?>)"  class="btn btn-danger"      title="删除" aria-label="删除" data-pjax="0"><span >删除</span></a>
+                                             
                                         </td>
                                     </tr>
 
-                                <?php } ?>
+<?php } ?>
 
                             </tbody>
                         </table>
@@ -184,14 +198,91 @@ $this->render(
         width: 350px;
         height:100px;
     }
+    
+    .sort {
+        border: none;
+
+    }    
 </style>
 <script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
 <script src="../js/layer/layer.js"></script>
 <script src="../js/laydate/laydate.js"></script>
 <script type="text/javascript">
+    
+        $('.sort').change(function(){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute("/lunbo/editsort") ?>',
+            type:'post',
+            data:{'sort':$(this).val(),'id':$(this).attr('idnum')},
+            success:function (data) {
+                data = JSON.parse(data);
+                if(data['code'] == 0){
+                    //console.log(data['info']);
+                    layer.msg(data['info']);
+                }else if(data['code'] == 1){
+                    layer.msg(data['修改成功']);
+                    //                    window.location = data['url'];
+                }
+            }
+        });
+                
+    }) 
+    
+    
+    
+    function deleteType(user_id){
+        layer.confirm('确定删除该评论吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url:'<?= Url::toRoute(['/lunbo/del']) ?>',
+                type:'post',
+                data:{'id':user_id},
+                success:function (data) {
+                    data = JSON.parse(data);
+                    if(data.code == 1){
+                        layer.alert("删除成功",{
+                            //                                skin: 'layui-layer-molv', //样式类名  自定义样式
+                            closeBtn: 1    // 是否显示关闭按钮
+                            ,anim: 1 //动画类型
+                            ,btn: ['确定'] //按钮
+                            ,icon: 6    // icon
+                            ,yes:function(){
+                                location.reload();
+                            }
+                        });
+                            
+                    }else{
+                        layer.alert(data.info);
+                    }
+                }
+            });
+        });
+    }
+    
+    $('textarea').change(function(){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute("/lunbo/editcontent") ?>',
+            type:'post',
+            data:{'content':$(this).val(),'id':$(this).attr('idnum')},
+            success:function (data) {
+                data = JSON.parse(data);
+                if(data['code'] == 0){
+                    //console.log(data['info']);
+                    layer.msg(data['info']);
+                }else if(data['code'] == 1){
+                    layer.msg(data['修改成功']);
+                    //                    window.location = data['url'];
+                }
+            }
+        });
+                
+    })   
+    
+    
     $('#hehe').click(function(){
         search = $('#start_time').val();
-        url = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>?time="+search;
+        url = "<?= \yii\helpers\Url::toRoute(["/lunbo/showremark"]) ?>?time="+search+"&type="+$('#remarktype').val();
         window.location.href = url;
                 
     })
