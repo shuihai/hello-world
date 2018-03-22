@@ -8,12 +8,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=101.201.31.185;dbname=robot_scene_activity',
-            'username' => 'zhihuioa',
-            'password' => 'zhihuioa',
-//            'dsn' => 'mysql:host=localhost;dbname=robot_cloud',
-//            'username' => 'root',
-//            'password' => 'root',
+            'dsn' => 'mysql:host=localhost;dbname=test',
+            'username' => 'root',
+            'password' => '123456',
             'charset' => 'utf8',
         ],
         'db_oldnav' => [

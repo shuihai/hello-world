@@ -24,12 +24,11 @@ $session = \Yii::$app->session;
 
 
                     <li id="toolBox" class="open active">
-                        <a href="#" title="工具箱">  <span
-                                class="menu-item-parent">工具箱</span><b class="collapse-sign"><em
-                                    class="fa fa-angle-up fa-right fa-up"></em></b></a>
+                        <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/index" ]) ?>" title="公众号列表">  <span
+                                class="menu-item-parent">公众号列表</span> </a>
                     </li>
 
-                    <li><a href="http://www.xiguaji.com/Knowledge" title="帮助中心" target="_blank"> <span class="menu-item-parent">帮助中心</span></a>
+                    <li><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark" ]) ?>" title="评论列表" > <span class="menu-item-parent">评论列表</span></a>
                     </li>
 
                 </ul>

@@ -47,8 +47,8 @@ $this->render(
                         <div class="mp-classify-title">分类</div>
                         <div class="mp-classify-list">
                             <ul>
-                                <li class="active"><a href="javascript:void(0);" data-tagid="35">分类甲</a></li>
-                                <li class=""><a href="javascript:void(0);" data-tagid="27">分类</a></li>
+                                <li class="active"><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/index", 'ciyao' => 0 ]) ?>" data-tagid="35">主打</a></li>
+                                <li class=""><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/index", 'ciyao' => 1]) ?>" data-tagid="27">次要</a></li>
 
 
                             </ul>
@@ -61,21 +61,20 @@ $this->render(
                             <table class="table">
                                 <colgroup>
                                     <col width="100">
-                                    <col>
                                     <col width="120">
                                     <col width="120">
+
                                     <col width="120">
                                     <col width="120">
-                                    <col width="120">
-                                    <col width="140">
+                                    <col width="60">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th>排行</th>
-                                        <th class="text-left">公众号</th>
+                                        <th class="">公众号</th>
                                         <th>观点评论数  </th>
-                                        <th>首小时阅读  
-                                        </th>
+                                        <th>排序  </th>
+                                        <th>首小时阅读  </th>
 
 
                                         <th>操作</th>
@@ -102,16 +101,18 @@ $this->render(
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-title"><a  target="_blank"
-                                                                href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
-                                                                class=""><?= $value['gzh_name'] ?></a></div>
+                                                                                    href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
+                                                                                    class=""><?= $value['gzh_name'] ?></a></div>
                                                         <div class="item-sub-title">kuwoxiaobei</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark",  'time' => $time, 'gzh_id' => $value['id']]) ?>" class=""><?= $value['number'] ?></a>
+                                                <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark", 'time' => $time, 'gzh_id' => $value['id']]) ?>" class=""><?= $value['number'] ?></a>
                                             </td>
-
+                                            <td>
+                                              <input value="<?= $value['sort']; ?>"  style="width:50px" class="sort"  idnum="<?= $value['id']; ?>" />  
+                                            </td>
 
                                             <td>
                                                 <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >已阅</span></a>
@@ -119,7 +120,7 @@ $this->render(
                                             <td>
 
                                                 <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
-                                                <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
+                                                 <a data-bizid="1546113" class="btn btn-default" onclick="ciyao(<?= $value['id'] ?>);">  归为次要</a>
                                                 <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
                                             </td>
                                         </tr>
@@ -168,6 +169,19 @@ $this->render(
         </div>
         <div class="form-group">
             <div class="col-md-3">
+                <label>评论类型</label>
+            </div>
+            <div class="col-md-8">
+                <select type="text" class="form-control pull-left meeting_input" id="user_type"   name="type" style="margin-right: 10px">
+                    <option value="0"  >多空观点</option>
+                    <option value="1"  >操作计划</option>
+                    <option value="2"  >其他</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
                 <label>多空选项</label>
             </div>
             <div class="col-md-9">
@@ -198,11 +212,39 @@ $this->render(
         margin: 0px; 
         width: 300px;
     }
+
+    .sort {
+        border: none;
+
+    }    
+
+
 </style>
 <script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
 <script src="../js/layer/layer.js"></script>
 <script src="../js/laydate/laydate.js"></script>
 <script type="text/javascript">
+    
+    $('.sort').change(function(){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute("/lunbo/editgzhsort") ?>',
+            type:'post',
+            data:{'sort':$(this).val(),'id':$(this).attr('idnum')},
+            success:function (data) {
+                data = JSON.parse(data);
+                if(data['code'] == 0){
+                    //console.log(data['info']);
+                    layer.msg(data['info']);
+                }else if(data['code'] == 1){
+                    layer.msg(data['修改成功']);
+                    //                    window.location = data['url'];
+                }
+            }
+        });
+                
+    }) 
+    
+    
     $('#hehe').click(function(){
         search = $('#start_time').val();
         url = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>?time="+search;
@@ -245,12 +287,24 @@ $this->render(
 </script>
 
 <script>
-    //            $('#start_time').change(function(){
-    //                alert(1);
-    //                
-    //            })
-            
-            
+    function ciyao (id){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute(["ciyao"]) ?>',
+            type:'post',
+            data:{'id': id },
+            success:function (data) {
+                data = JSON.parse(data);
+
+                if(data['code'] == 1){
+
+                    window.location.reload();
+                }else {
+                    layer.msg(data['info']);
+                }
+
+            }
+        });
+    }
             
             
     function stopguangzhu (id){
