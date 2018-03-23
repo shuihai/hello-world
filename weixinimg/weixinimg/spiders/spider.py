@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import scrapy
-from stock import items
+from weixinimg import items
 import pymysql
 import time
 from datetime import datetime, timedelta
@@ -8,13 +8,13 @@ from scrapy.utils.project import get_project_settings
 import sys
 import os
 import shutil
-
+from weixinimg.items import ImagesItem
 reload(sys)
 sys.setdefaultencoding('gbk')
 
 
-class Stock(scrapy.Spider):
-    name = "stock"
+class Weixin(scrapy.Spider):
+    name = "weixinimg"
 
     def __init__(self):
         settings = get_project_settings()
@@ -31,35 +31,25 @@ class Stock(scrapy.Spider):
 
 
     def start_requests(self):
+
         url_set = self.get_url_set()
         for url in url_set:
-            if (url['type'] == 0):
-                realurl = self.get_need_update_url(url['type'], url['code'])
-                if ( not realurl):
-                    print realurl + ' not equal 1'
-                    realurl = 'http://quotes.money.163.com/service/chddata.html?code=' + str(
-                        url['type']) + url['code'] + '&start=' + '19900101' + '&end=' + time.strftime('%Y%m%d',
-                                                                                                      time.localtime(
-                                                                                                          time.time())) + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
-                    yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
-                elif  not (realurl==1):
-                    yield scrapy.Request(realurl,
-                                         callback=lambda response, type=0: self.parse_type_update(response, type))
+            realurl =  'http://weixin.sogou.com/weixin?type=1&s_from=input&query='+url['gzh_name']+'&ie=utf8&_sug_=n&_sug_type_='
+            yield scrapy.Request(realurl )
+            # if (url['type'] == 0):
+            #     realurl = self.get_need_update_url(url['type'], url['code'])
+            #     if ( not realurl):
+            #         print realurl + ' not equal 1'
+            #         realurl = 'http://quotes.money.163.com/service/chddata.html?code=' + str(
+            #             url['type']) + url['code'] + '&start=' + '19900101' + '&end=' + time.strftime('%Y%m%d',
+            #                                                                                           time.localtime(
+            #                                                                                               time.time())) + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
+            #         yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
+            #     elif  not (realurl==1):
+            #         yield scrapy.Request(realurl,
+            #                              callback=lambda response, type=0: self.parse_type_update(response, type))
 
-            elif (url['type'] == 1):
-                realurl = self.get_need_update_url(url['type'], url['code'])
-                if ( not realurl):
-                    print realurl + ' not equal 1'
-                    realurl = 'http://quotes.money.163.com/service/chddata.html?code=' + str(
-                        url['type']) + url['code'] + '&start=' + '19900101' + '&end=' + time.strftime('%Y%m%d',
-                                                                                                      time.localtime(
-                                                                                                          time.time())) + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
 
-                    yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
-
-                elif  not (realurl==1):
-                    yield scrapy.Request(realurl,
-                                         callback=lambda response, type=0: self.parse_type_update(response, type))
 
 
     def get_need_update_url(self, type, code):
@@ -103,101 +93,15 @@ class Stock(scrapy.Spider):
         url_set = cursor.fetchall()
         return url_set
 
-    def parse_type(self, response, tpye):
-        a = response.body_as_unicode().split('\r\n')
-        b = a[1:-1]
-        if not b:
-            self.save_as_csv(b, tpye)
 
-    def parse_type_update(self, response, tpye):
-        a = response.body_as_unicode().split('\r\n')
-        b = a[1:-1]
-        if b:
-            self.save_as_csv_update(b, tpye)
 
     def parse(self, response):
-        a = response.body_as_unicode().split('\r\n')
-        b = a[1:-1]
-        self.save_as_csv(b)
+        name_codes = response.css('.news-list2 li')
+        first_node = name_codes[0].css('li .gzh-box2 .img-box a img::attr(src)').extract()
+        item = ImagesItem()
+        item['image_urls'] = first_node
+        yield item
+        # yield scrapy.Request(first_node, callback= self.parse_detail )
 
-        # for day in a[1:-1]:
-        #     day_arr = day.split(',')
-        #     item =  items.DayItem()
-        #     item['date'] = day_arr[0]
-        #     item['code'] = day_arr[1][1::]
-        #     item['name'] = day_arr[2]
-        #     item['tclose'] = day_arr[3]
-        #     item['high'] = day_arr[4]
-        #     item['low'] = day_arr[5]
-        #     item['topen'] = day_arr[6]
-        #     item['lclose'] = day_arr[7]
-        #     item['chg'] = day_arr[8]
-        #     item['pchg'] = day_arr[9]
-        #     item['voturnover'] = day_arr[10]
-        #     item['vaturnover'] = day_arr[11]
-        #     yield item
-
-    def save_as_csv(self, data, type):
-        for d in data:
-            d = d.split(',')
-            file = 'D:\\test\\' + str(type) + str(d[1][1::]) + "back.csv"
-            with open(file, 'a+') as f:
-                datastr = ''
-                for dd in d:
-                    datastr = datastr + dd.lstrip("'") + ','
-                f.write(datastr + '\n')
-            file = 'D:\\test\\' + str(type) + str(d[1][1::]) + ".csv"
-            with open(file, 'a+') as f:
-                datastr = ''
-                for dd in d:
-                    datastr = datastr + dd.lstrip("'") + ','
-                f.write(datastr + '\n')
-
-    def save_as_csv_update(self, data, type):
-        code = data[0].split(',')[1][1::]
-        file1 = 'D:\\test\\' + str(type) + code + ".csv"
-        file2 = 'D:\\test\\' + str(type) + code + "back.csv"
-        old_datastr = ''
-        with open(file1, 'w') as f:
-            for d in data:
-                d = d.split(',')
-                datastr = ''
-                for dd in d:
-                    datastr = datastr + dd.lstrip("'") + ','
-                    print datastr
-                f.write(datastr + '\n')
-            with open(file2) as f2:
-                old_datastr = f2.readline()
-                while old_datastr:
-                    f.write(old_datastr)
-                    old_datastr = f2.readline()
-        shutil.copyfile(file1, file2)
-
-
-
-
-        # old_datastr=''
-        # file1=''
-        # file2 = ''
-        # file3 = ''
-        # for d in data:
-        #     d = d.split(',')
-        #     code=str(d[1][1::])
-        #     file1 = 'D:\\test\\' + str(type) + str(d[1][1::]) + ".csv"
-        #     with open(file1, 'a+') as f:
-        #         datastr = ''
-        #         for dd in d:
-        #             datastr = datastr + dd.lstrip("'") + ','
-        #         f.write(datastr + '\n')
-        #         f.close()
-        #     file2 = 'D:\\test\\' + str(type) + str(d[1][1::]) + "back.csv"
-        #     with open(file2) as f:
-        #         old_datastr = f.read()
-        #         f.close()
-        #     file3 = 'D:\\test\\' + str(type) + str(d[1][1::]) + "back2.csv"
-        # print file1
-        # file1=file1.replace('\\', '\\\\')
-        # print file1
-        # with open(file1, 'a+') as f2:
-        #     f2.write(old_datastr + '\n')
-        # shutil.copyfile(file1, file2)
+    def parse_detail(self, response):
+        item = ImagesItem()

@@ -12,3 +12,7 @@ class WeixinimgItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class ImagesItem(scrapy.Item):
+    image_urls = scrapy.Field()
+    files = scrapy.Field()

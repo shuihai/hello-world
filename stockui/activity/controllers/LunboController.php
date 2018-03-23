@@ -107,9 +107,9 @@ class LunboController extends CommonController {
             $time = date('Y-m-d', time());
         }
        
-        $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name  FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  '.$where.' order by xiaoming_remark.sort desc')
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name   FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  '.$where.' order by xiaoming_remark.sort desc')
                 ->queryAll();
-        return $this->render('showremark', ['list' => $list, 'time' => $time]);
+        return $this->render('showremark', ['list' => $list, 'time' => $time,'type'=>Yii::$app->request->get('type'),'time'=>Yii::$app->request->get('time'),]);
     }
 
     public function actionStopguangzhu() {
