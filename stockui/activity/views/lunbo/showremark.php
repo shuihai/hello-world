@@ -98,7 +98,7 @@ $this->render(
                                                     </a>
                                                 </div>
                                                 <div class="item-inner">
-                                                    <div class="item-title"><a   href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"    class=""><?= $value['gzh_name'] ?></a></div>
+                                                    <div class="item-title"><a   href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark", 'gzh_id' => $value['gzh_id'], 'time' => $time, 'type' => $type]) ?>"    class=""><?= $value['gzh_name'] ?></a></div>
                                                     <div class="item-sub-title">kuwoxiaobei</div>
                                                 </div>
                                             </div>

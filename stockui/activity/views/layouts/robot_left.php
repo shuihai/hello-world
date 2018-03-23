@@ -7,7 +7,14 @@ use robotUser\models\Robot;
 
 $session = \Yii::$app->session;
 
-
+if(strripos($_SERVER['REQUEST_URI'],'?')>0){
+    $url_str_temp =  substr($_SERVER['REQUEST_URI'],0,strripos($_SERVER['REQUEST_URI'],'?')); 
+}  else {
+    $url_str_temp = $_SERVER['REQUEST_URI'];
+}
+$url_str = substr($url_str_temp,0,($last = strripos($url_str_temp,'/')));
+$begin = strripos($url_str,'/');
+$url_str = substr($url_str_temp,$begin);
  
 ?>
 
@@ -23,12 +30,12 @@ $session = \Yii::$app->session;
                 <ul style="">
 
 
-                    <li id="toolBox" class="open active">
+                    <li id="toolBox" <?php if ($url_str == '/lunbo/index'  ) {echo "  class='open active'";}?> >
                         <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/index" ]) ?>" title="公众号列表">  <span
                                 class="menu-item-parent">公众号列表</span> </a>
                     </li>
 
-                    <li><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark" ]) ?>" title="评论列表" > <span class="menu-item-parent">评论列表</span></a>
+                    <li   <?php if ($url_str == '/lunbo/showremark'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark" ]) ?>" title="评论列表" > <span class="menu-item-parent">评论列表</span></a>
                     </li>
 
                 </ul>
