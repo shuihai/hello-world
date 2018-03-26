@@ -37,7 +37,8 @@ $url_str = substr($url_str_temp,$begin);
 
                     <li   <?php if ($url_str == '/lunbo/showremark'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark" ]) ?>" title="评论列表" > <span class="menu-item-parent">评论列表</span></a>
                     </li>
-
+                    <li   <?php if ($url_str == '/lunbo/createmind'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/createmind" ]) ?>" title="思维导图" > <span class="menu-item-parent">思维导图</span></a>
+                    </li>
                 </ul>
             </div>
         </div>
