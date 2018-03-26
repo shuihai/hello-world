@@ -51,6 +51,15 @@ class LunboController extends CommonController {
         return $this->render('index', ['list' => $list, 'time' => $time]);
     }
 
+    
+    public function actionCreatemind() {
+ 
+
+        return $this->render('createmind', []);
+    }
+    
+    
+    
     public function actionTest() {
 //        $this->layout = True;
 

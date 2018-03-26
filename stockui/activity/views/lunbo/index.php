@@ -220,7 +220,7 @@ $this->render(
 
 
 </style>
-<script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
+<script src="../js/jquery-2.0.2.min.js"></script>
 <script src="../js/layer/layer.js"></script>
 <script src="../js/laydate/laydate.js"></script>
 <script type="text/javascript">
@@ -392,7 +392,7 @@ $this->render(
 
 
 
-<script src="http://zs.xiguaji.com/Content/js/plugin/notify/jquery.growl.js"></script>
+<!--<script src="http://zs.xiguaji.com/Content/js/plugin/notify/jquery.growl.js"></script>
 <script src="http://zs.xiguaji.com/Content/js/jquery-ui-1.9.2.min.js"></script>
 
-<script src="http://zs.xiguaji.com/Content/js/bootstrap.min.js"></script>
+<script src="http://zs.xiguaji.com/Content/js/bootstrap.min.js"></script>-->
