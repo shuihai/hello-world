@@ -199,6 +199,14 @@ $this->render(
 
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>POWER</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form_input" id="power" name="power"> 
+            </div>
+        </div>
         <input type="hidden" id="gzh_id" name="gzh_id">
     </form>
 </div>
@@ -262,7 +270,7 @@ $this->render(
             title: "新增公众号评论",
             closeBtn: 1,
             btn:['确定','取消'],
-            area:['450px','280px'],
+            area:['450px','380px'],
             content: $("#add_type"),
             yes: function(){
                            
@@ -337,7 +345,7 @@ $this->render(
             title: "新建评论",
             closeBtn: 1,
             btn:['确定','取消'],
-            area:['450px','350px'],
+            area:['450px','450px'],
             content: $("#add_type"),
             yes: function(){
  

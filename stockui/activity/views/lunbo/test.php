@@ -15,7 +15,8 @@ $this->render(
 )
 ?>
 
-
+<!--<script src="../js/echarts.min.js"></script>-->
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
 <!--/sidebar-->
 <!--main-->
 
@@ -23,114 +24,17 @@ $this->render(
 <div class="main">
 
 
-    <div class="main-content">
-        <!--topbar-->
 
-        <!--/topbar-->
+    <div class="main-content">
+
         <div id="content" style="opacity: 1;">
             <div class="wrapper wrapper-no-gap">
 
-                <div class="mp-user-article-timer clearfix">
-                    <div class="control-select-with-nav">
 
-                        <input type="text" class="form_input" id="start_time"  name="date"  value="" placeholder="请选择日期">
-                        <a  id="hehe" class="btn btn-success"  >  切换日期</a>
-
-                    </div>
+                <div id="main" style="width: 600px;height:400px;" >
+                       
 
                 </div>
-
-                <!---->
-                <div class="popular-public-list">
-                    <!---->
-                    <div class="wrapper-col-left">
-                        <div class="mp-classify-title">分类</div>
-                        <div class="mp-classify-list">
-                            <ul>
-                                <li class="active"><a href="javascript:void(0);" data-tagid="35">分类甲</a></li>
-                                <li class=""><a href="javascript:void(0);" data-tagid="27">分类</a></li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/-->
-                    <!---->
-                    <div class="wrapper-col-right">
-                        <div class="mp-account-list">
-                            <table class="table">
-                                <colgroup>
-                                    <col width="100">
-                                    <col>
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="120">
-                                    <col width="140">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>排行</th>
-                                        <th class="text-left">公众号</th>
-                                        <th>观点评论数  </th>
-                                        <th>首小时阅读  
-                                        </th>
-
-
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rankBody">
-
-
-                                    <?php foreach ($list as $key => $value) { ?>
-
-                                        <tr>
-                                            <td>
-                                                <span class="table-rank table-rank1 "><?= $key + 1 ?></span>
-                                            </td>
-                                            <td>
-                                                <div class="media-list">
-                                                    <div class="item-media">
-                                                        <a>
-                                                            <img class="lazy"
-                                                                 data-original="http://cdnlogo.xiguaji.com/BizLogo/MzI1MzAwODMyMQ==.jpg-BizLogoCut"
-                                                                 src="http://thirdwx.qlogo.cn/mmopen/Q3auHgzwzM4NGEndWFTMNgM8E5rMicItrr3ia7JlS4giciajr8uyrCZ4ALPWF8funPd82aaFj8ywbMD0BvlhXgibgkxYDcpRiaEzeKXg9dAxFAXQg/132"
-                                                                 style="display: inline;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="item-inner">
-                                                        <div class="item-title"><a
-                                                                href="<?= \yii\helpers\Url::toRoute(["/lunbo/showgzh", 'gzh_name' => $value['gzh_name']]) ?>"
-                                                                class=""><?= $value['gzh_name'] ?></a></div>
-                                                        <div class="item-sub-title">kuwoxiaobei</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/showremark", 'id' => $value['id'], 'time' => $time]) ?>" class=""><?= $value['number'] ?></a>
-                                            </td>
-
-
-                                            <td><a  href="javascript:;"   onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>&nbsp;&nbsp; </td>
-                                            <td>
-
-                                                <a  href="javascript:;"  class="btn btn-info" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="新建评论" aria-label="新建评论" data-pjax="0"><span >新建评论</span></a>
-                                                <a  href="javascript:;"  class="btn btn-default" onclick="window.id=<?= Html::encode($value['id']) ?>;addType(window.id);"    title="查看评论" aria-label="查看评论" data-pjax="0"><span >查看评论</span></a>
-                                                <a data-bizid="1546113" class="btn btn-success" onclick="stopguangzhu(<?= $value['id'] ?>);">  停止关注</a>
-                                            </td>
-                                        </tr>
-
-                                    <?php } ?>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!--/-->
-                </div>
-                <!--/-->
             </div>
 
 
@@ -139,204 +43,114 @@ $this->render(
     </div>
 </div>
 <!--/main-->
+<!--<style type="text/css">
+    li{margin-top:2px; margin-bottom:2px;}
+    button{width:140px;}
+    select{width:140px;}
+    #layout{width:1230px;}
+    #jsmind_nav{width:210px;height:600px;border:solid 1px #ccc;overflow:auto;float:left;}
+    .file_input{width:100px;}
+    button.sub{width:100px;}
 
-<!-- Dynamic Modal -->
-<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content"></div>
-    </div>
-</div>
-<div class="modal fade" id="remoteModalAttention" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content"></div>
-    </div>
-</div>
-
-<div id="add_type" class="layer_robot " style="display: none;">
-    <form id="form_submit_type"  role="form" class="form-horizontal col-md-10">
-        <div class="form-group" style="margin-top: 20px">
-            <div class="col-md-3">
-                <label>日期</label>
-            </div>
-            <div class="col-md-8">
-                <input type="text" class="form_input" id="end_time"  name="date"  value="" placeholder="请选择日期">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-3">
-                <label>多空选项</label>
-            </div>
-            <div class="col-md-9">
-                <input type="radio" class="form_input" id="duokong"  name="duokong"  value="1"  >看多
-                <input type="radio" class="form_input" id="duokong"  name="duokong"  value="0"  >看空
-
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-3">
-                <label>内容</label>
-            </div>
-            <div class="col-md-9">
-                <textarea id="pinglun" name="content"> </textarea>
-
-            </div>
-        </div>
-        <input type="hidden" id="gzh_id" name="gzh_id">
-    </form>
-</div>
-<style>
-    #pinglun {
-        margin: 0px;
-        height: 90px;
-        width: 300px;
+    #jsmind_container{
+        float:left;
+        width:1000px;
+        height:600px;
+        border:solid 1px #ccc;
+        background:#f4f4f4;
     }
-    #end_time{
-        margin: 0px; 
-        width: 300px;
+
+    jmnode[nodeid="open"]{
+        background-color:red!important;
     }
-</style>
-<script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
-<script src="../js/layer/layer.js"></script>
-<script src="../js/laydate/laydate.js"></script>
+
+</style>-->
+
 <script type="text/javascript">
-    $('#hehe').click(function(){
-        search = $('#start_time').val();
-        url = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>?time="+search;
-        window.location.href = url;
-                
-    })
-                        
-                        
-    function addType(id){
-        $("#robottype_type_name").val(id);
-        $("#robottype_type_code").val("");
-        $("#robottype_type_code").attr("disabled",false);
-        layer.open({
-            type: 1,
-            title: "新增公众号评论",
-            closeBtn: 1,
-            btn:['确定','取消'],
-            area:['450px','280px'],
-            content: $("#add_type"),
-            yes: function(){
-                           
-                $.ajax({
-                    url:'<?= \yii\helpers\Url::toRoute("/robot-type/typecreate") ?>',
-                    type:'post',
-                    data:$('#form_submit_type').serialize(),
-                    success:function (data) {
-                        data = JSON.parse(data);
-                        if(data['code'] == 0){
-                            //console.log(data['info']);
-                            layer.msg(data['info']);
-                        }else if(data['code'] == 1){
-                            window.location = data['url'];
-                        }
-                    }
-                });
-            }
-        });
+    var myChart = echarts.init(document.getElementById('main'));
+    var labelRight = {
+    normal: {
+        position: 'right',
+        color: "black"
     }
-
-</script>
-
-<script>
-    //            $('#start_time').change(function(){
-    //                alert(1);
-    //                
-    //            })
-            
-            
-            
-            
-    function stopguangzhu (id){
-        $.ajax({
-            url:'<?= \yii\helpers\Url::toRoute(["stopguangzhu"]) ?>',
-            type:'post',
-            data:{'id': id },
-            success:function (data) {
-                data = JSON.parse(data);
-
-                if(data['code'] == 1){
-
-                    window.location.reload();
-                }else {
-                    layer.msg(data['info']);
-                }
-
-            }
-        });
-    }
+};
 
 
-    function addType(remark_id){ 
-        $("#gzh_id").val(remark_id);
-        $("#robottype_type_name").val("");
-        $("#robottype_type_code").val("");
-        $("#robottype_type_code").attr("disabled",false);
-        layer.open({
-            type: 1,
-            title: "新建评论",
-            closeBtn: 1,
-            btn:['确定','取消'],
-            area:['450px','350px'],
-            content: $("#add_type"),
-            yes: function(){
- 
-                $.ajax({
-                    url:'<?= \yii\helpers\Url::toRoute(["/lunbo/update"]) ?>',
-                    type:'post',
-                    data:$('#form_submit_type').serialize(),
-                    success:function (data) {
-                        data = JSON.parse(data);
-                        if(data['code'] == 0){
-                            //console.log(data['info']);
-                            layer.msg(data['info']);
-                        }else if(data['code'] == 1){
-                            window.location.href = "<?= \yii\helpers\Url::toRoute(["/lunbo/index"]) ?>";
-                        }
-                    }
-                });
-            }
-        });
-    }
-    
-    var start = {
-        elem: "#start_time",
-        //                min: laydate.now(0, "YYYY-MM-DD"),
-        format: "YYYY-MM-DD",
-        istime: false
-    };
-    var end = {
-        elem: "#end_time",
-        min: laydate.now(0, "YYYY-MM-DD"),
-        format: "YYYY-MM-DD",
-        istime: false
-    };
-    laydate(start);
-    laydate(end);
-    
-    function hehe(){
-        if($('#end_time').val()!=''){
-            if($('#start_time').val()<=$('#end_time').val()){
-           
-                return true;
-            }else{
-                layer.alert('时间选择有误 : 开始时间大于结束时间!')
-                return false;
-            }
+
+option = {
+    title: {
+        text: '交错正负轴标签',
+        subtext: 'From ExcelHome',
+        sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         }
-
-    }
-    
+    },
+    grid: {
+        top: 80,
+        bottom: 30
+    },
+    xAxis: {
+        type : 'value',
+        position: 'top',
+        splitLine: {lineStyle:{type:'dashed'}},
+    },
+    yAxis: {
+        type : 'category',
+        axisLine: {show: false},
+        axisLabel: {show: false},
+        axisTick: {show: false},
+        splitLine: {show: false},
+        data : ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one']
+    },
+    series : [
+        {
+             
+            
+            name:'生活费',
+            type:'bar',
+            stack: '总量',
+            // itemStyle : {
+            //      borderColor:'black',
+            //      color:'black'
+             
+            //  },
+            
+            label: {
+                   
+                normal: {
+                   show: true,
+             
+                    formatter: '{b}'
+                }
+            },
+            data:[
+                {value: -0.07, itemStyle : {
+                 borderColor:'black',
+                 color:'black'
+             
+             }, },
+                {value: -0.09, label: labelRight},
+                0.2, 0.44,
+                {value: -0.23,  },
+                0.08,
+                {value: -0.17, label: labelRight},
+                0.47,
+                {value: -0.36, label: labelRight},
+                0.18
+            ]
+        }
+    ]
+};
+ myChart.setOption(option);
+ 
+ 
+  
+ 
 </script>
-<!-- /.modal -->
 
 
 
-<script src="http://zs.xiguaji.com/Content/js/plugin/notify/jquery.growl.js"></script>
-<script src="http://zs.xiguaji.com/Content/js/jquery-ui-1.9.2.min.js"></script>
-
-<script src="http://zs.xiguaji.com/Content/js/bootstrap.min.js"></script>
