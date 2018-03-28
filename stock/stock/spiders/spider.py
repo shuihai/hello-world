@@ -44,7 +44,7 @@ class Stock(scrapy.Spider):
             if (url['type'] == 0):
                 realurl = self.get_need_update_url(url['type'], url['code'])
                 if ( not realurl):
-                    print realurl + ' not equal 1'
+                    print   ' 文件不存在'
                     realurl = 'http://quotes.money.163.com/service/chddata.html?code=' + str(
                         url['type']) + url['code'] + '&start=' + '19900101' + '&end=' + time.strftime('%Y%m%d',
                                                                                                       time.localtime(
@@ -57,22 +57,22 @@ class Stock(scrapy.Spider):
             elif (url['type'] == 1):
                 realurl = self.get_need_update_url(url['type'], url['code'])
                 if ( not realurl):
-                    print realurl + ' not equal 1'
+                    print  ' 文件不存在'
                     realurl = 'http://quotes.money.163.com/service/chddata.html?code=' + str(
                         url['type']) + url['code'] + '&start=' + '19900101' + '&end=' + time.strftime('%Y%m%d',
                                                                                                       time.localtime(
                                                                                                           time.time())) + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
 
-                    yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
+                    yield scrapy.Request(realurl, callback=lambda response, type=1: self.parse_type(response, type))
 
                 elif  not (realurl==1):
                     yield scrapy.Request(realurl,
-                                         callback=lambda response, type=0: self.parse_type_update(response, type))
+                                         callback=lambda response, type=1: self.parse_type_update(response, type))
 
 
     def get_need_update_url(self, type, code):
         file = 'D:\\test\\' + str(type) + str(code) + "back.csv"
-        print file
+        # print file
 
         flag = os.path.isfile(file)
 
@@ -83,12 +83,12 @@ class Stock(scrapy.Spider):
                 tempdata = f.readline()
                 tempdata = tempdata.split(',')
                 last_date = tempdata[0]
-
-                if time.strftime('%Y-%m-%d', time.localtime(time.time() - 3600 * 24)) != last_date:
-                    print last_date
-                    print time.strftime('%Y-%m-%d', time.localtime(time.time() - 3600 * 24))
+                last_date = last_date.replace("/", "-")
+                if time.strftime('%Y-%m-%d', time.localtime(time.time() )) != last_date:
+                    # print last_date
+                    # print time.strftime('%Y-%m-%d', time.localtime(time.time()  ))
                     last_date = last_date.split('-')
-
+                    # print last_date
                     start_time = (
                     datetime(int(last_date[0]), int(last_date[1]), int(last_date[2])) + timedelta(days=1)).strftime(
                         "%Y%m%d")
@@ -96,9 +96,9 @@ class Stock(scrapy.Spider):
                     return 'http://quotes.money.163.com/service/chddata.html?code=' + str(
                         type) + code + '&start=' + start_time + '&end=' + end_time + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
                 else:
-                    return 1  #等于1 说明没有文件
+                    return 1  #等于1 不用更新
         else:  #  说明没有文件
-            print code
+            # print code
             return False
             # realurl= 'http://quotes.money.163.com/service/chddata.html?code='+str(type)+code+'&start='+'19900101'+'&end='+time.strftime('%Y%m%d', time.localtime(time.time()))+'&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
             # yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
@@ -111,17 +111,17 @@ class Stock(scrapy.Spider):
         url_set = cursor.fetchall()
         return url_set
 
-    def parse_type(self, response, tpye):
+    def parse_type(self, response, type):
         a = response.body_as_unicode().split('\r\n')
         b = a[1:-1]
-        if not b:
-            self.save_as_csv(b, tpye)
+        if  b:
+            self.save_as_csv(b, type)
 
-    def parse_type_update(self, response, tpye):
+    def parse_type_update(self, response, type):
         a = response.body_as_unicode().split('\r\n')
         b = a[1:-1]
         if b:
-            self.save_as_csv_update(b, tpye)
+            self.save_as_csv_update(b, type)
 
     def parse(self, response):
         a = response.body_as_unicode().split('\r\n')
@@ -149,6 +149,7 @@ class Stock(scrapy.Spider):
         for d in data:
             d = d.split(',')
             file = 'D:\\test\\' + str(type) + str(d[1][1::]) + "back.csv"
+            # print file
             with open(file, 'a+') as f:
                 datastr = ''
                 for dd in d:
@@ -172,7 +173,7 @@ class Stock(scrapy.Spider):
                 datastr = ''
                 for dd in d:
                     datastr = datastr + dd.lstrip("'") + ','
-                    print datastr
+                    # print datastr
                 f.write(datastr + '\n')
             with open(file2) as f2:
                 old_datastr = f2.readline()

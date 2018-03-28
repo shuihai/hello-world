@@ -39,6 +39,10 @@ $url_str = substr($url_str_temp,$begin);
                     </li>
                     <li   <?php if ($url_str == '/lunbo/createmind'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/createmind" ]) ?>" title="思维导图" > <span class="menu-item-parent">思维导图</span></a>
                     </li>
+                     <li   <?php if ($url_str == '/lunbo/duokongrank'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/duokongrank" ]) ?>" title="思维导图" > <span class="menu-item-parent">多空排行</span></a>
+                    </li>
+                    
+                    
                 </ul>
             </div>
         </div>

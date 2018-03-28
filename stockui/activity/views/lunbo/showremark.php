@@ -75,6 +75,7 @@ $this->render(
                                     <th class="">多或空</th>
                                     <th>内容 </th>
                                     <th >排序  </th>
+                                    <th >POWER  </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -117,7 +118,9 @@ $this->render(
                                         <td>
                                             <input value="<?= $value['sort']; ?>"  style="width:50px" class="sort"  idnum="<?= $value['id']; ?>" />   
                                         </td>
-
+                                        <td>
+                                            <input value="<?= $value['power']; ?>"  style="width:50px" class="power"  idnum="<?= $value['id']; ?>" />   
+                                        </td>
                                         <td>
 
                                             <a  href="javascript:deleteType(<?= $value['id'] ?>)"  class="btn btn-danger"      title="删除" aria-label="删除" data-pjax="0"><span >删除</span></a>
@@ -199,10 +202,14 @@ $this->render(
         height:100px;
     }
     
-    .sort {
+    .sort ,.power{
         border: none;
-
     }    
+    
+    input{
+        text-align:center;
+    }
+    
 </style>
 <script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
 <script src="../js/layer/layer.js"></script>
@@ -228,7 +235,24 @@ $this->render(
                 
     }) 
     
-    
+         $('.power').change(function(){
+        $.ajax({
+            url:'<?= \yii\helpers\Url::toRoute("/lunbo/editpower") ?>',
+            type:'post',
+            data:{'power':$(this).val(),'id':$(this).attr('idnum')},
+            success:function (data) {
+                data = JSON.parse(data);
+                if(data['code'] == 0){
+                    //console.log(data['info']);
+                    layer.msg(data['info']);
+                }else if(data['code'] == 1){
+                    layer.msg(data['修改成功']);
+                    //                    window.location = data['url'];
+                }
+            }
+        });
+                
+    })    
     
     function deleteType(user_id){
         layer.confirm('确定删除该评论吗？', {

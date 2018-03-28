@@ -21,18 +21,18 @@ class LunboController extends CommonController {
     public function actionIndex() {
 //        $this->layout = FALSE;
         $where = ' where  xiaoming_gzh.status=1  ';
-        
-        
-        if (Yii::$app->request->get('ciyao')===0 || Yii::$app->request->get('ciyao')==1) { 
- 
-            $where .= ' and  ciyao=' .Yii::$app->request->get('ciyao');
+
+
+        if (Yii::$app->request->get('ciyao') === 0 || Yii::$app->request->get('ciyao') == 1) {
+
+            $where .= ' and  ciyao=' . Yii::$app->request->get('ciyao');
         } else {
-     
+
             $where .= '';
         }
-        
-        
-        
+
+
+
         if (Yii::$app->request->get('time')) {
             $time = Yii::$app->request->get('time');
         } else {
@@ -40,7 +40,7 @@ class LunboController extends CommonController {
         }
 
         $list = [];
-        $list = Yii::$app->db->createCommand('SELECT xiaoming_gzh.*,count(xiaoming_remark.id) as number FROM xiaoming_gzh left join xiaoming_remark on xiaoming_remark.gzh_id=xiaoming_gzh.id and date="' . $time . '"' .$where  .' group by xiaoming_gzh.id   order by ciyao  ,xiaoming_gzh.sort desc')
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_gzh.*,count(xiaoming_remark.id) as number FROM xiaoming_gzh left join xiaoming_remark on xiaoming_remark.gzh_id=xiaoming_gzh.id and date="' . $time . '"' . $where . ' group by xiaoming_gzh.id   order by ciyao  ,xiaoming_gzh.sort desc')
                 ->queryAll();
 
         foreach ($list as $key => $value) {
@@ -51,15 +51,12 @@ class LunboController extends CommonController {
         return $this->render('index', ['list' => $list, 'time' => $time]);
     }
 
-    
     public function actionCreatemind() {
- 
+
 
         return $this->render('createmind', []);
     }
-    
-    
-    
+
     public function actionTest() {
 //        $this->layout = True;
 
@@ -93,32 +90,32 @@ class LunboController extends CommonController {
 
         $where = ' where xiaoming_gzh.status=1  ';
 
-        if (Yii::$app->request->get('gzh_id')) { 
-            $where .= ' and  gzh_id=' .Yii::$app->request->get('gzh_id');
+        if (Yii::$app->request->get('gzh_id')) {
+            $where .= ' and  gzh_id=' . Yii::$app->request->get('gzh_id');
         } else {
             $shaixuan = '';
             $where .= '';
         }
-        if (Yii::$app->request->get('type')) { 
-            $where .= ' and  type=' .Yii::$app->request->get('type');
+        if (Yii::$app->request->get('type')) {
+            $where .= ' and  type=' . Yii::$app->request->get('type');
         } else {
             
         }
-        if (trim(Yii::$app->request->get('time'))) { 
-            $where .= ' and  date="' . Yii::$app->request->get('time').'"';
+        if (trim(Yii::$app->request->get('time'))) {
+            $where .= ' and  date="' . Yii::$app->request->get('time') . '"';
         } else {
-           
+            
         }
-        
+
         if (trim(Yii::$app->request->get('time'))) {
             $time = Yii::$app->request->get('time');
         } else {
             $time = date('Y-m-d', time());
         }
-       
-        $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name   FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  '.$where.' order by xiaoming_remark.sort desc')
+
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name   FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  ' . $where . ' order by xiaoming_remark.sort desc')
                 ->queryAll();
-        return $this->render('showremark', ['list' => $list, 'time' => $time,'type'=>Yii::$app->request->get('type'),'time'=>Yii::$app->request->get('time'),]);
+        return $this->render('showremark', ['list' => $list, 'time' => $time, 'type' => Yii::$app->request->get('type'), 'time' => Yii::$app->request->get('time'),]);
     }
 
     public function actionStopguangzhu() {
@@ -134,8 +131,7 @@ class LunboController extends CommonController {
             return Json::encode(['code' => 0, 'info' => '操作失败']);
         }
     }
-    
-    
+
     public function actionCiyao() {
         $id = Yii::$app->request->post('id');
 
@@ -148,7 +144,7 @@ class LunboController extends CommonController {
         } else {
             return Json::encode(['code' => 0, 'info' => '操作失败']);
         }
-    }    
+    }
 
     public function actionUpdate() {
         $this->layout = FALSE;
@@ -160,6 +156,15 @@ class LunboController extends CommonController {
             } else {
                 $duokong = 0;
             }
+
+            if (Yii::$app->request->post('power')) {
+                $power = $post['power'];
+            } else {
+                $power = 0;
+            }
+
+
+
 
             $connection = Yii::$app->db;
             $transaction = $connection->beginTransaction();
@@ -173,6 +178,7 @@ class LunboController extends CommonController {
                         'date' => $post['date'],
                         'duokong' => $duokong,
                         'type' => $post['type'],
+                        'power' => $power
                     ])->execute();
 
 
@@ -213,7 +219,6 @@ class LunboController extends CommonController {
         }
     }
 
-    
     public function actionEditsort() {
         $id = Yii::$app->request->post('id');
 
@@ -226,9 +231,65 @@ class LunboController extends CommonController {
         } else {
             return Json::encode(['code' => 0, 'info' => '修改失败']);
         }
-    }    
+    }
 
-        public function actionEditgzhsort() {
+    public function actionEditpower() {
+        $id = Yii::$app->request->post('id');
+
+        $flag = Yii::$app->db->createCommand('update xiaoming_remark set power=:power where id = :id ')
+                ->bindValues([':id' => $id, ':power' => Yii::$app->request->post('power')])
+                ->execute();
+
+        if ($flag) {
+            return Json::encode(['code' => 1]);
+        } else {
+            return Json::encode(['code' => 0, 'info' => '修改失败']);
+        }
+    }
+
+    public function actionDuokongrank() {
+
+        $where = ' where xiaoming_gzh.status=1  ';
+
+        if (Yii::$app->request->get('gzh_id')) {
+            $where .= ' and  gzh_id=' . Yii::$app->request->get('gzh_id');
+        } else {
+            $shaixuan = '';
+            $where .= '';
+        }
+        if (Yii::$app->request->get('type')) {
+            $where .= ' and  type=' . Yii::$app->request->get('type');
+        } else {
+            
+        }
+        if (trim(Yii::$app->request->get('time'))) {
+            $where .= ' and  date="' . Yii::$app->request->get('time') . '"';
+        } else {
+            
+        }
+
+        if (trim(Yii::$app->request->get('time'))) {
+            $time = Yii::$app->request->get('time');
+        } else {
+            $time = date('Y-m-d', time());
+        }
+
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name   FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  ' . $where . ' order by abs(xiaoming_remark.power) desc limit 10')
+                ->queryAll();
+        
+        $list2=[];
+        foreach ($list as $key => $value) {
+            $real=[];
+            $value['duokong']==1?$real['value']=$value['power']:$real['value']=-$value['power'];
+            $real['content'] = $value['content'];
+            
+            $list2[] = $real;
+        } 
+        
+        return $this->render('duokongrank', ['list' => array_reverse($list2)]);
+    }
+
+    public function actionEditgzhsort() {
         $id = Yii::$app->request->post('id');
 
         $flag = Yii::$app->db->createCommand('update xiaoming_gzh set sort=:sort where id = :id ')
@@ -240,5 +301,6 @@ class LunboController extends CommonController {
         } else {
             return Json::encode(['code' => 0, 'info' => '修改失败']);
         }
-    }    
+    }
+
 }
