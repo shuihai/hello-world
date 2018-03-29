@@ -15,22 +15,20 @@ class DmozSpider(scrapy.Spider):
     name = "dmoz"
     # allowed_domains = ["dmoztools.net"]
     start_urls = [
-        # "http://www.itcrm.com/Home/Info/solution.html",
+        "http://www.itcrm.com/Home/Info/solution.html",
         # "http://www.itcrm.com/Home/Info/news/type_id/4.html",
-        "https://www.baidu.com/",
+        # "https://www.baidu.com/",
     ]
     urlset = []
 
     def parse(self, response):
-
-
-
-        # print response
+        a = response.body_as_unicode().split('\r\n')
+        print a
         print 4
-        captcha = input("请输入你的验证>")
-        print captcha
-        str = response.css('title::text').extract()
-        print str[0]
+        # captcha = input("请输入你的验证>")
+        # print captcha
+        # str = response.css('title::text').extract()
+        # print str[0]
         # print str[0].decode( "UTF-8")
         # print unicode(str[0], "UTF-8")
         # url =["http://www.itcrm.com/sitemap.txt"]
