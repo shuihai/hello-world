@@ -52,38 +52,6 @@ class Weixin(scrapy.Spider):
 
 
 
-    def get_need_update_url(self, type, code):
-        file = 'D:\\test\\' + str(type) + str(code) + "back.csv"
-        print file
-
-        flag = os.path.isfile(file)
-
-        print flag
-
-        if flag:
-            with open(file, 'a+') as f:
-                tempdata = f.readline()
-                tempdata = tempdata.split(',')
-                last_date = tempdata[0]
-
-                if time.strftime('%Y-%m-%d', time.localtime(time.time() - 3600 * 24)) != last_date:
-                    print last_date
-                    print time.strftime('%Y-%m-%d', time.localtime(time.time() - 3600 * 24))
-                    last_date = last_date.split('-')
-
-                    start_time = (
-                    datetime(int(last_date[0]), int(last_date[1]), int(last_date[2])) + timedelta(days=1)).strftime(
-                        "%Y%m%d")
-                    end_time = time.strftime('%Y%m%d', time.localtime(time.time()))
-                    return 'http://quotes.money.163.com/service/chddata.html?code=' + str(
-                        type) + code + '&start=' + start_time + '&end=' + end_time + '&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
-                else:
-                    return 1  #绛変簬1 璇存槑娌℃湁鏂囦欢
-        else:  #  璇存槑娌℃湁鏂囦欢
-            print code
-            return False
-            # realurl= 'http://quotes.money.163.com/service/chddata.html?code='+str(type)+code+'&start='+'19900101'+'&end='+time.strftime('%Y%m%d', time.localtime(time.time()))+'&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER'
-            # yield scrapy.Request(realurl, callback=lambda response, type=0: self.parse_type(response, type))
 
     def get_url_set(self):
         client = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, db=self.db,
