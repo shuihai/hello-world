@@ -33,6 +33,7 @@ class Weixin(scrapy.Spider):
         self.pwd = settings['PWD']
         self.db = settings['DB']
         self.table = settings['TABLE']
+        self.firefox_path = settings['FIREFOX_PATH']
 
     start_urls = [
         "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=",
@@ -67,7 +68,8 @@ class Weixin(scrapy.Spider):
         from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
         from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-        binary = FirefoxBinary(r'C:\Program Files (x86)\Mozilla Firefox\firefox.exe')
+        # binary = FirefoxBinary(r'C:\Program Files (x86)\Mozilla Firefox\firefox.exe')
+        binary = FirefoxBinary(self.firefox_path)
         driver = webdriver.Firefox(firefox_binary=binary)
         driver.get('http://www.itcrm.com')
         data = driver.find_elements_by_css_selector('.sublist .zhihui')[0].get_attribute('src')

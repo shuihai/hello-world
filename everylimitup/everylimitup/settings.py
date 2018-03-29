@@ -14,6 +14,7 @@ BOT_NAME = 'everylimitup'
 SPIDER_MODULES = ['everylimitup.spiders']
 NEWSPIDER_MODULE = 'everylimitup.spiders'
 
+FIREFOX_PATH = r'C:\my_soft\Mozilla Firefox\firefox.exe'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'everylimitup (+http://www.yourdomain.com)'
