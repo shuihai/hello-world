@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2018-03-30 12:30:14
+-- Generation Time: 2018-04-01 16:34:28
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -26,16 +26,18 @@ SET time_zone = "+00:00";
 -- 表的结构 `xiaoming_limitup`
 --
 
+DROP TABLE IF EXISTS `xiaoming_limitup`;
 CREATE TABLE IF NOT EXISTS `xiaoming_limitup` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
-  `code` varchar(12) NOT NULL,
-  `stockname` varchar(64) NOT NULL,
-  `reason` int(11) NOT NULL,
-  `first_time` int(11) NOT NULL,
-  `last_time` int(11) NOT NULL,
-  `consistent_day` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `code` varchar(12) CHARACTER SET utf8 NOT NULL,
+  `stockname` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `reason` varchar(125) CHARACTER SET utf8 NOT NULL,
+  `first_time` time NOT NULL,
+  `last_time` time NOT NULL,
+  `consistent_day` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

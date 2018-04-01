@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import re
 import scrapy
 from selenium.common.exceptions import NoSuchElementException
 
@@ -40,33 +41,39 @@ class Limitup(scrapy.Spider):
         self.binary = FirefoxBinary(self.firefox_path)
         self.driver = webdriver.Firefox(firefox_binary=self.binary)
         self.driver.set_window_size(1366, 768)
-    # start_urls = [
-    #     "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=",
-    #     ]
+
+    start_urls = [
+        "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=",
+        ]
 
 
-    def start_requests(self):
-        self.driver.get(
-            "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=")
-        # data = self.driver.find_elements_by_css_selector('.sublist .zhihui')[0].get_attribute('src')
-        WebDriverWait(self.driver, 8).until(EC.presence_of_element_located((By.CLASS_NAME, "static_tbody_table")))
+    # def start_requests(self):
+    #     self.driver.get(
+    #         "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=")
+    #     # data = self.driver.find_elements_by_css_selector('.sublist .zhihui')[0].get_attribute('src')
+    #     WebDriverWait(self.driver, 8).until(EC.presence_of_element_located((By.CLASS_NAME, "static_tbody_table")))
+    #
+    #     flag = self.get_element_number()
+    #     if flag:
+    #         self.process_data()
+    #
+    #         for index in range(2, flag + 1):
+    #             print index
+    #             num_elements = self.get_num_elements()
+    #             self.click_element(num_elements[index - 1])
+    #             time.sleep(5)
+    #             items = self.process_data()
+    #             for item in items:
+    #                 yield item
+                    # print item
 
 
-        flag = self.get_element_number()
-        if flag:
-            self.get_current_element()
 
-            for index in range(2,flag+1):
-                print index
-                num_elements = self.get_num_elements()
-                self.click_element(num_elements[index-1])
-                time.sleep(5)
-                self.get_current_element()
 
-            # elements = self.driver.find_elements_by_css_selector('.pagination .num,.pagination .current')
-            # print len(elements)
-            # elements = self.driver.find_elements_by_css_selector('.pagination .num')
-            # print len(elements)
+                # elements = self.driver.find_elements_by_css_selector('.pagination .num,.pagination .current')
+                # print len(elements)
+                # elements = self.driver.find_elements_by_css_selector('.pagination .num')
+                # print len(elements)
 
         # try:
         #     #
@@ -90,25 +97,52 @@ class Limitup(scrapy.Spider):
         #     self.driver.quit()
 
 
-        realurl = 'http://www.itcrm.com'
-        yield scrapy.Request(realurl)
+        # realurl = 'http://www.itcrm.com'
+        # yield scrapy.Request(realurl)
 
-
-    def click_element(self,element):
+    def click_element(self, element):
         last_height = self.driver.execute_script("return document.body.scrollHeight")
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         ActionChains(self.driver).move_to_element(element).click(element).perform()
 
-
-    def get_current_element(self):
-        data = self.driver.find_elements_by_css_selector('.static_tbody_table tbody tr')
-
+    def get_current_element_static_tbody_table(self):
+        data = self.driver.find_elements_by_css_selector(
+            '.static_tbody_table tbody tr')  # [0].find_element_by_css_selector('td')
         print data
         return data
 
-    def process_data(self,data):
-        # for each_data in data:
-        #     LimitupItem.code=
+    def get_current_element_scroll_tbody_table(self):
+        data = self.driver.find_elements_by_css_selector(
+            '.scroll_tbody_table tbody tr')  # [0].find_element_by_css_selector('td')
+        print data
+        return data
+
+    def process_data(self):
+        data_static_tbody_table = self.get_current_element_static_tbody_table()
+        data_scroll_tbody_table = self.get_current_element_scroll_tbody_table()
+        date = self.get_date()
+        items = []
+        for index in range(0, len(data_static_tbody_table) - 1):
+            tds_values = data_static_tbody_table[index].find_elements_by_css_selector('td')
+            item = LimitupItem()
+            item['stockname']  = tds_values[3].text
+            item['code'] = tds_values[2].text
+
+            tds_values = data_scroll_tbody_table[index].find_elements_by_css_selector('td')
+            item['first_time'] = tds_values[3].text
+            item['last_time'] = tds_values[4].text
+            item['reason'] = tds_values[7].text
+            item['consistent_day'] = tds_values[6].text
+            item['date'] = date
+            items.append(item)
+        return items
+
+    def get_date(self):
+        date = self.driver.find_element_by_css_selector('span[explain="当前时刻涨停的股票，首次涨停的时间。"]').text
+        pattern = '\d+\.\d+\.\d+'
+        processed_date = re.search(pattern, date, flags=0).group()
+        print processed_date
+        return processed_date
 
     def get_num_elements(self):
         num_elements = self.driver.find_elements_by_css_selector('.pagination > .num')
@@ -123,22 +157,30 @@ class Limitup(scrapy.Spider):
         return len(elements)
 
     def parse(self, response):
-        print 33
+        self.driver.get(
+            "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=")
+        # data = self.driver.find_elements_by_css_selector('.sublist .zhihui')[0].get_attribute('src')
+        WebDriverWait(self.driver, 8).until(EC.presence_of_element_located((By.CLASS_NAME, "static_tbody_table")))
 
+        flag = self.get_element_number()
+        if flag:
+            self.process_data()
 
-        a = response.body_as_unicode().split('\r\n')
-        print a
-    # tbody1 = response.css('.scroll_table tbody tr')
-    # tbody2 = response.css('.static_table tbody tr')
-    # tbody2 = response.css('.static_table')
-    # print tbody2
-    # # for tr in tbody2:
-    # for index, tr in enumerate(tbody2):
-    #     print index
-    #     item = LimitupItem()
-    #     item.code =tr.css('td')[1].css('div::text').extract()
-    #     print item.code
+            for index in range(2, flag + 1):
+                print index
+                num_elements = self.get_num_elements()
+                self.click_element(num_elements[index - 1])
+                time.sleep(5)
+                itemss = self.process_data()
+                for item in itemss:
+                    yield item
 
-
-    # def parse_detail(self, response):
-    # item = ImagesItem()
+            # a=    LimitupItem()
+            # a['date'] ='2018-04-04'
+            # a['code']=909090
+            # a['consistent_day']=3
+            # a['first_time']=3
+            # a['last_time']=4
+            # a['stockname']='hehe'
+            # a['reason']='haha'
+            # yield a
