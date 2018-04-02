@@ -50,9 +50,13 @@ class EverylimitupPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, items.LimitupItem):
             d = dict(item)
-            effect_row = self.cursor.executemany("insert into xiaoming_limitup(date,code,stockname,reason,first_time,last_time,consistent_day)values(%s,%s,%s,%s,%s,%s,%s)",
-                                                 [(d['date'],d['code'],d['stockname'],d['reason'],d['first_time'],d['last_time'],d['consistent_day'])])
-            self.client.commit()
+            print "select * from " + self.table + " where code='" + d['code'] + "' and date='" + d['date']+"'"
+            self.cursor.execute("select * from " + self.table + " where code='" + d['code'] + "' and date='" + d['date']+"'")
+            data = self.cursor.fetchone()
+            if not data:
+                effect_row = self.cursor.executemany("insert into xiaoming_limitup(date,code,stockname,reason,first_time,last_time,consistent_day)values(%s,%s,%s,%s,%s,%s,%s)",
+                                                     [(d['date'],d['code'],d['stockname'],d['reason'],d['first_time'],d['last_time'],d['consistent_day'])])
+                self.client.commit()
 
         return item
 

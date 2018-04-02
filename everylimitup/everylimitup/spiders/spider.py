@@ -41,6 +41,7 @@ class Limitup(scrapy.Spider):
         self.binary = FirefoxBinary(self.firefox_path)
         self.driver = webdriver.Firefox(firefox_binary=self.binary)
         self.driver.set_window_size(1366, 768)
+        self.up=[]
 
     start_urls = [
         "http://www.iwencai.com/stockpick/search?typed=1&preParams=&ts=1&f=1&qs=result_rewrite&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=%E4%BB%8A%E6%97%A5%E6%B6%A8%E5%81%9C%E8%A1%A8&queryarea=",
@@ -67,38 +68,6 @@ class Limitup(scrapy.Spider):
     #                 yield item
                     # print item
 
-
-
-
-                # elements = self.driver.find_elements_by_css_selector('.pagination .num,.pagination .current')
-                # print len(elements)
-                # elements = self.driver.find_elements_by_css_selector('.pagination .num')
-                # print len(elements)
-
-        # try:
-        #     #
-        #     WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "current")))
-        #     num_elements = self.driver.find_elements_by_css_selector('.pagination > num')
-        #     current_element = self.driver.find_elements_by_css_selector('.pagination num, .pagination current')
-        #     for index in range(2,len(elements)+1):
-        #         print index
-        #         # a = element.text
-        #         # print a
-        #         # print 2222222
-        #         # last_height = self.driver.execute_script("return document.body.scrollHeight")
-        #         # self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        #         # ActionChains(self.driver).move_to_element(element).click(element).perform()
-        #         # time.sleep(7)
-        #         # data = self.driver.find_element_by_css_selector('.static_tbody_table').text
-        #         # print data
-
-        # finally:
-        #     time.sleep(15)
-        #     self.driver.quit()
-
-
-        # realurl = 'http://www.itcrm.com'
-        # yield scrapy.Request(realurl)
 
     def click_element(self, element):
         last_height = self.driver.execute_script("return document.body.scrollHeight")
@@ -175,12 +144,49 @@ class Limitup(scrapy.Spider):
                 for item in itemss:
                     yield item
 
-            # a=    LimitupItem()
-            # a['date'] ='2018-04-04'
-            # a['code']=909090
-            # a['consistent_day']=3
-            # a['first_time']=3
-            # a['last_time']=4
-            # a['stockname']='hehe'
-            # a['reason']='haha'
-            # yield a
+        # 接下来请求每个stoke今天的营业部信息
+        url_set = self.get_url_set()
+        for url in url_set:
+            if not url['up_decimal'] :
+                realurl = self.get_need_url( url['code'])
+                yield scrapy.Request(realurl, callback=lambda response, code=url['code']: self.parse_yyb(response, code))
+
+
+
+    def parse_yyb(self,response,code):
+        trs = response.css('#tab-2 tbody tr')
+        for tr in trs:
+            href = self.get_yyb_url(tr)
+            if href:
+                yield scrapy.Request(href, callback=lambda response, code=code: self.parse_yyb_solo(response, code)) #获得当个营业部信息
+
+
+
+    def get_yyb_url(self,tr):
+        href = tr.css('.sc-name a')[1].css('::attr(href)').extract()[0]
+        pattern = '(\d+\d+)\.'
+        yyb = re.search(pattern, href, flags=0)
+        if yyb:
+            return 'http://data.eastmoney.com/Stock/lhb/yyb/' + yyb.group(1) + '.html'
+
+
+    def get_need_url(self,code):
+        return 'http://data.eastmoney.com/stock/lhb/'+code+'.html'
+
+
+    def get_url_set(self):
+        client = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.pwd, db=self.db,
+                                 charset='utf8')
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        cursor.execute("select * from " + self.table + " ")
+        url_set = cursor.fetchall()
+        return url_set
+
+
+    def parse_yyb_solo(self,response,code):
+        tds = response.css('#tab-1 tbody tr')[0].css('td')
+        yyb_info = []
+        yyb_info['cishu']=tds[4]
+        yyb_info['firstday_up'] = tds[4]
+        yyb_info['secondday_up'] = tds[4]
+        yyb_info['thirdday_up'] = tds[4]
