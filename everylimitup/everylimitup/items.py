@@ -22,3 +22,14 @@ class LimitupItem(scrapy.Item):
     first_time = scrapy.Field()
     last_time = scrapy.Field()
     consistent_day = scrapy.Field()
+
+class LonghuItem(scrapy.Item):
+    longhu_date = scrapy.Field()
+    date = scrapy.Field()
+    longhu_stock_code = scrapy.Field()
+    yyb_code = scrapy.Field()
+    stock_yyb_code = scrapy.Field()
+    yyb_name = scrapy.Field()
+    up1 = scrapy.Field()
+    up2 = scrapy.Field()
+    up3 = scrapy.Field()
