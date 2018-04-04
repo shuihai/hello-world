@@ -53,8 +53,122 @@ class LunboController extends CommonController {
 
     public function actionCreatemind() {
 
-
         return $this->render('createmind', []);
+    }
+
+    public function actionLonghuban() {
+        set_time_limit(0);
+
+        $where = 'where 1 ';
+        if (Yii::$app->request->get('time')) {
+            $time = Yii::$app->request->get('time');
+            $where.=' and date="' . $time . '"';
+        } else {
+            $time = date('Y-m-d', time());
+            $where.=' and date="' . $time . '"';
+        }
+
+        $list = [];
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_limitup.*  FROM xiaoming_limitup ' . $where)
+                ->queryAll();
+
+        foreach ($list as $key => $value) {
+            if ($value['up_decimal'] == 0.00) {
+                $stock_list = Yii::$app->db->createCommand('SELECT xiaoming_longhuban.*  FROM xiaoming_longhuban where  longhu_stock_code=:longhu_stock_code and longhu_date=:longhu_date')
+                        ->bindValues([':longhu_stock_code' => $value['code'], 'longhu_date' => $value['date']])
+                        ->queryAll();
+
+                $up_decimals = [];
+                $up_count = 0;
+                $up_decimals = 0;
+                foreach ($stock_list as $k => $v) {
+                    $v['up1'] ? $v['up1'] = $v['up1'] : $v['up1'] = 1;
+                    $v['up2'] ? $v['up2'] = $v['up2'] : $v['up2'] = 1;
+                    $v['up3'] ? $v['up3'] = $v['up3'] : $v['up3'] = 1;
+
+                    $up1 = 1 * (1 + $v['up1'] / 100);
+                    $up2 = 1 * (1 + $v['up1'] / 100) * (1 + $v['up2'] / 100);
+                    $up3 = 1 * (1 + $v['up1'] / 100) * (1 + $v['up2'] / 100) * (1 + $v['up3'] / 100);
+                    $up_decimal = max($up1, $up2, $up3);
+
+                    if ($up_decimal > 1.1) {
+                        $up_count++;
+                    }
+                    $up_decimals += $up_decimal;
+                }
+                $up_decimal = $up_decimals / count($stock_list) - 1;
+                $up_probability = $up_count / count($stock_list);
+
+
+                $flag = Yii::$app->db->createCommand('update xiaoming_limitup set up_probability=:up_probability, up_decimal=:up_decimal where code = :code and  date = :date  ')
+                        ->bindValues([':up_decimal' => $up_decimal, ':up_probability' => $up_probability, ':code' => $value['code'], ':date' => $value['date']])
+                        ->execute();
+            }
+        }
+        $list = Yii::$app->db->createCommand('SELECT xiaoming_limitup.*  FROM xiaoming_limitup ' . $where)
+                ->queryAll();
+
+
+
+        return $this->render('longhuban', ['list' => $list, 'time' => $time]);
+    }
+
+    public function actionLonghuban_solo() {
+        set_time_limit(0);
+
+        $where = 'where 1 ';
+        if (Yii::$app->request->get('time')) {
+            $time = Yii::$app->request->get('time');
+            $where.=' and date="' . $time . '"';
+        } else {
+            $time = date('Y-m-d', time());
+            $where.=' and date="' . $time . '"';
+        }
+
+        $list = [];
+
+        $stock_list = Yii::$app->db->createCommand('SELECT xiaoming_longhuban.*  FROM xiaoming_longhuban where  longhu_stock_code=:longhu_stock_code and longhu_date=:longhu_date')
+                ->bindValues([':longhu_stock_code' => Yii::$app->request->get('code'), 'longhu_date' => Yii::$app->request->get('date')])
+                ->queryAll();
+ 
+        
+        $up_decimals = [];
+        $up_count = 0;
+        $up_decimals = 0;
+        $stock_list2=[];
+        foreach ($stock_list as $k => $v) {
+            $v['up1'] ? $v['up1'] = $v['up1'] : $v['up1'] = 1;
+            $v['up2'] ? $v['up2'] = $v['up2'] : $v['up2'] = 1;
+            $v['up3'] ? $v['up3'] = $v['up3'] : $v['up3'] = 1;
+
+            $up1 = 1 * (1 + $v['up1'] / 100);
+            $up2 = 1 * (1 + $v['up1'] / 100) * (1 + $v['up2'] / 100);
+            $up3 = 1 * (1 + $v['up1'] / 100) * (1 + $v['up2'] / 100) * (1 + $v['up3'] / 100);
+            $up_decimal = max($up1, $up2, $up3);
+            $v['max'] = $up_decimal;
+            $v['bigerthan10'] =FALSE;
+            if ($up_decimal > 1.1) {
+                $up_count++;
+                $v['bigerthan10'] =TRUE;
+            }
+      
+             $stock_list2[] = $v;
+            $up_decimals += $up_decimal;
+        }
+        
+        $count = 0 ;
+        foreach ($stock_list2 as $key => $value) {
+                if($value['bigerthan10']){
+                    $count++;
+                }
+            }
+            
+ 
+        
+        $up_decimal = $up_decimals / count($stock_list) - 1;
+        $up_probability = $up_count / count($stock_list);
+        
+        return $this->render('longhuban_solo', ['list' => $stock_list2, 'time' => $time, 'up_decimal' => $up_decimal, 'up_probability' => $up_probability]);
     }
 
     public function actionTest() {
@@ -276,16 +390,16 @@ class LunboController extends CommonController {
 
         $list = Yii::$app->db->createCommand('SELECT xiaoming_remark.*,xiaoming_gzh.gzh_name   FROM  xiaoming_remark  left join xiaoming_gzh on xiaoming_remark.gzh_id=xiaoming_gzh.id  ' . $where . ' order by abs(xiaoming_remark.power) desc limit 10')
                 ->queryAll();
-        
-        $list2=[];
+
+        $list2 = [];
         foreach ($list as $key => $value) {
-            $real=[];
-            $value['duokong']==1?$real['value']=$value['power']:$real['value']=-$value['power'];
+            $real = [];
+            $value['duokong'] == 1 ? $real['value'] = $value['power'] : $real['value'] = -$value['power'];
             $real['content'] = $value['content'];
-            
+
             $list2[] = $real;
-        } 
-        
+        }
+
         return $this->render('duokongrank', ['list' => array_reverse($list2)]);
     }
 

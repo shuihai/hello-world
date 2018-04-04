@@ -20,7 +20,7 @@ $url_str = substr($url_str_temp,$begin);
 
 <div class="sidebar">
     <div class="brand">
-        <div class="brand-logo"><a href="http://www.xiguaji.com">小明自用平台</a></div>
+        <div class="brand-logo"><a href="">小明自用平台</a></div>
     </div>
     <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="position: relative; overflow: visible;">
         <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" style="max-height: none;"
@@ -28,8 +28,6 @@ $url_str = substr($url_str_temp,$begin);
             <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
                  style="position:relative; top:0; left:0;" dir="ltr">
                 <ul style="">
-
-
                     <li id="toolBox" <?php if ($url_str == '/lunbo/index'  ) {echo "  class='open active'";}?> >
                         <a href="<?= \yii\helpers\Url::toRoute(["/lunbo/index" ]) ?>" title="公众号列表">  <span
                                 class="menu-item-parent">公众号列表</span> </a>
@@ -41,7 +39,8 @@ $url_str = substr($url_str_temp,$begin);
                     </li>
                      <li   <?php if ($url_str == '/lunbo/duokongrank'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/duokongrank" ]) ?>" title="思维导图" > <span class="menu-item-parent">多空排行</span></a>
                     </li>
-                    
+                    <li   <?php if ($url_str == '/lunbo/longhuban'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/longhuban" ]) ?>" title="龙虎榜" > <span class="menu-item-parent">龙虎榜</span></a>
+                    </li>
                     
                 </ul>
             </div>

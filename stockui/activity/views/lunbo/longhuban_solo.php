@@ -30,21 +30,12 @@ $this->render(
         <div id="content" style="opacity: 1;">
             <div class="wrapper wrapper-no-gap">
 
-                <div class="mp-user-article-timer clearfix">
-                    <div class="control-select-with-nav">
+                <div class="pull-right">
+                
+                        <h3>三日内最高幅度  <?= $up_decimal*100 . '%'; ?>  </h3>
+                        <h3>大于10%的概率  <?= $up_probability*100 . '%'; ?>  </h3>
 
-                        <input type="text" class="form_input" id="start_time"  name="date"  value="<?= $time ?>" placeholder="请选择日期">
-                        <select type="text" class="form_input" id="remarktype"   name="type" style="margin-right: 10px">
-                            <option value="0" >选择类型</option>
-                            <option value="0"  >多空观点</option>
-                            <option value="1"  >操作计划</option>
-                            <option value="2"  >其他</option>
-                        </select>
-
-
-                        <a  id="hehe" class="btn btn-success"  > 搜索</a>
-
-                    </div>
+              
 
                 </div>
 
@@ -59,23 +50,25 @@ $this->render(
                         <table class="table">
                             <colgroup>
                                 <col width="100"> 
-                                <col width="150">
+                                <col width="100">
                                 <col width="100"> 
-                                <col width="200">
-                                <col width="120">
-                                <col width="50">
-                                <col width="350">
+                                <col width="300">
+                                <col width="100">
+                                <col width="100">
+                               <col width="100">
                             </colgroup>
                             <thead>
                                 <tr>
                                     <th>序号</th>
                                     <th>名称</th>
                                     <th class="">代码</th>
-                                    <th class="">连板天数</th>
-                                    <th class="">上板原因</th>
-                                    <th>预期三日内最高收盘涨幅</th>
-                                    <th >三日内收盘涨幅大于10%概率  </th>
-                                     
+                                    <th class="">营业部</th>
+                                    <th class="">up1</th>
+                                    <th class="">up2</th>
+                                    <th>up3</th>
+                                    <th >三日内收盘最大涨幅  </th>
+                                    <th >是否大于10%  </th>
+
                                 </tr>
                             </thead>
                             <tbody id="rankBody">
@@ -87,18 +80,19 @@ $this->render(
                                         <td>
                                             <span class="table-rank table-rank1 "><?= $key + 1 ?></span>
                                         </td>
-                                        <td><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/longhuban_solo", 'date' => $time, 'code' => $value['code']]) ?>"> <?= $value['stockname']; ?> </a>   </td>
-                                        <td> <?= $value['code']; ?>    </td>
-                                        <td> <?= $value['consistent_day']; ?>    </td>
+                                        <td>  <?= $value['longhu_stock_code']; ?>   </td>
+                                        <td> <?= $value['longhu_stock_code']; ?>    </td>
+                                        <td> <?= $value['yyb_name']; ?>    </td>
                                         <td>
-                                            <textarea  idnum="<?= $value['id']; ?>"><?= $value['reason']; ?>  </textarea>
+                                            <?= $value['up1']; ?>  
                                         </td>
-                                        <td> <?= ($value['up_decimal']*100).'%'; ?>    </td>
-                                        <td> <?= ($value['up_probability']*100).'%'; ?>    </td>
-                          
+                                        <td><?= $value['up2']; ?>   </td>
+                                        <td> <?= $value['up3']; ?>     </td>
+                                        <td>    <?= $value['max']; ?>  </td>
+                                        <td>    <?= $value['bigerthan10']; ?>  </td>
                                     </tr>
 
-<?php } ?>
+                                <?php } ?>
 
                             </tbody>
                         </table>
@@ -171,15 +165,15 @@ $this->render(
         width: 350px;
         height:100px;
     }
-    
+
     .sort ,.power{
         border: none;
     }    
-    
+
     input{
         text-align:center;
     }
-    
+
 </style>
 <script src="http://zs.xiguaji.com/Content/js/jquery-2.0.2.min.js"></script>
 <script src="../js/layer/layer.js"></script>
@@ -230,4 +224,3 @@ $this->render(
 <!-- /.modal -->
 
 
- 

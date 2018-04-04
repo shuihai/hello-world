@@ -159,7 +159,7 @@ class Limitup(scrapy.Spider):
 
     def parse_temp(self, response):
         print self.up
-        print 1000000
+
 
     def parse_yyb(self,response,code):
         trs = response.css('#tab-2 tbody tr')

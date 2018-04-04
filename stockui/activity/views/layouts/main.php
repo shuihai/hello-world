@@ -18,7 +18,7 @@ if (class_exists('activity\assets\AppAsset')) {
        <meta content="webkit" name="renderer">
         <meta charset="utf-8">
         <?= Html::csrfMetaTags() ?>
-        <title>热门公众 单22</title>
+        <title>自用平台</title>
         <?php $this->head() ?>
         <!--<link rel="dns-prefetch" href="//bizcdn2.xiguaji.com/">-->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
