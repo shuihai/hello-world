@@ -149,7 +149,7 @@ class Limitup(scrapy.Spider):
         # 接下来请求每个stoke今天的营业部信息
         url_set = self.get_url_set()
         for url in url_set:
-            if not url['up_decimal'] :
+            if not url['up_decimal']:
                 realurl = self.get_need_url( url['code'])
                 yield scrapy.Request(realurl, callback=lambda response, code=url['code']: self.parse_yyb(response, code) )
 

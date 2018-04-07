@@ -24,6 +24,7 @@ class Stock(scrapy.Spider):
         self.pwd = settings['PWD']
         self.db = settings['DB']
         self.table = settings['TABLE2']
+        self.csv_path = settings['CSV_PATH']
 
     # start_urls = [
     #     "http://quotes.money.163.com/service/chddata.html?code=0000001&start=20180301&end=20150303&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER",
@@ -71,7 +72,8 @@ class Stock(scrapy.Spider):
 
 
     def get_need_update_url(self, type, code):
-        file = 'D:\\test\\' + str(type) + str(code) + "back.csv"
+        # file = 'D:\\test\\' + str(type) + str(code) + "back.csv"
+        file = self.csv_path+ str(type) + str(code) + "back.csv"
         # print file
 
         flag = os.path.isfile(file)
@@ -148,14 +150,14 @@ class Stock(scrapy.Spider):
     def save_as_csv(self, data, type):
         for d in data:
             d = d.split(',')
-            file = 'D:\\test\\' + str(type) + str(d[1][1::]) + "back.csv"
+            file = self.csv_path + str(type) + str(d[1][1::]) + "back.csv"
             # print file
             with open(file, 'a+') as f:
                 datastr = ''
                 for dd in d:
                     datastr = datastr + dd.lstrip("'") + ','
                 f.write(datastr + '\n')
-            file = 'D:\\test\\' + str(type) + str(d[1][1::]) + ".csv"
+            file = self.csv_path + str(type) + str(d[1][1::]) + ".csv"
             with open(file, 'a+') as f:
                 datastr = ''
                 for dd in d:
@@ -164,8 +166,8 @@ class Stock(scrapy.Spider):
 
     def save_as_csv_update(self, data, type):
         code = data[0].split(',')[1][1::]
-        file1 = 'D:\\test\\' + str(type) + code + ".csv"
-        file2 = 'D:\\test\\' + str(type) + code + "back.csv"
+        file1 = self.csv_path + str(type) + code + ".csv"
+        file2 = self.csv_path + str(type) + code + "back.csv"
         old_datastr = ''
         with open(file1, 'w') as f:
             for d in data:

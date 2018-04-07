@@ -70,8 +70,14 @@ $this->render(
     var myChart = echarts.init(document.getElementById('main'));
     var labelRight = {
         normal: {
-            position: 'right',
-            color: "black"
+//            position: 'right',
+            color: "black",
+            fontSize:20,
+            fontWeight:"bold",
+            verticalAlign: "top",
+            position:'insideBottomRight',
+         
+//            lineHeight: 56,
         }
     };
     var itemleft = {
@@ -84,7 +90,7 @@ $this->render(
     option = {
         title: {
             text: '多空力量排行',
-            subtext: 'From ExcelHome',
+            subtext: '左空右多',
             sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
         },
         tooltip : {
@@ -146,7 +152,7 @@ $this->render(
                     <?php
                   
                         foreach ($list  as $key => $value) {?>
-                            {value: <?= $value['value'] ?>,<?php  if($value['value']<0){ echo 'itemStyle : itemleft';} ?> },
+                            {value: <?= $value['value'] ?>, label: labelRight,<?php  if($value['value']<0){ echo 'itemStyle : itemleft';} ?> },
 
                        <?php } ?>
                     
