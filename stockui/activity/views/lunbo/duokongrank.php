@@ -70,12 +70,12 @@ $this->render(
     var myChart = echarts.init(document.getElementById('main'));
     var labelRight = {
         normal: {
-//            position: 'right',
+            position: 'right',
             color: "black",
             fontSize:20,
             fontWeight:"bold",
             verticalAlign: "top",
-            position:'insideBottomRight',
+            position:'inside',
          
 //            lineHeight: 56,
         }
