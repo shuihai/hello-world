@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class MainController {
 
 
     @ModelAttribute
-    public void getPerson(@RequestParam(name = "id",required = false,defaultValue = "0") String id, Map<String,Object> map){
+    public void getPerson(@RequestParam(name = "id",required = false,defaultValue = "1") String id, Map<String,Object> map){
         Person person = personService.getPerson( Long.parseLong(id));
         map.put("person",person);
         System.out.println(person.getUsername());
@@ -81,5 +82,18 @@ public class MainController {
     public String springTest(){
         return testService.test();
     }
+
+
+    @RequestMapping(value = "testjson", method = RequestMethod.GET)
+    public  @ResponseBody List<Person>  springTestjson(){
+//        List<Person> persons = personService.findall();
+//        System.out.println(persons.size());
+//        return persons;
+
+         List<Person> persons = Arrays.asList(personService.getPerson(1),personService.getPerson(2)) ;
+        System.out.println(persons);
+        return persons;
+    }
+
 
 }

@@ -6,6 +6,12 @@
 <body>
 <center>
     <h2 style="color: #ff261a;">this is my test page! ${requestScope.person.username}</h2>
+
+    <%
+        System.out.println(request.person.username);
+
+
+    %>
 </center>
 
 <table border="1" cellpadding="10" cellspacing="0">
