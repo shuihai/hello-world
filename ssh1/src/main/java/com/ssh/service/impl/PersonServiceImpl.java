@@ -5,11 +5,13 @@ import com.ssh.entity.Person;
 import com.ssh.repository.ClassroomRepository;
 import com.ssh.repository.PersonRepository;
 import com.ssh.repository.impl.ClassroomRepositoryImpl;
+import com.ssh.repository.impl.PersonRepositoryImpl;
 import com.ssh.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by XRog
@@ -36,5 +38,13 @@ public class PersonServiceImpl implements PersonService {
         person.setRemark("this is XRog");
         person.setClassroom(classroom);
         return personRepository.save(person);
+    }
+
+    public Person getPerson(long id) {
+        return personRepository.get(id);
+    }
+
+    public List<Person> findall(){
+        return personRepository.findAll();
     }
 }

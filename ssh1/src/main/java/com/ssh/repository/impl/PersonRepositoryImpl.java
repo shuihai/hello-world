@@ -2,6 +2,7 @@ package com.ssh.repository.impl;
 
 import com.ssh.repository.PersonRepository;
 import com.ssh.entity.Person;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,12 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     public List<Person> findAll() {
-        return null;
+        Session session = getCurrentSession();
+        String  hql = "from Person ";
+        Query query = session.createQuery(hql);
+        List<Person> list = query.list();
+        return list;
+
     }
 
     public void persist(Person entity) {
