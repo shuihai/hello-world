@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -85,14 +86,25 @@ public class MainController {
 
 
     @RequestMapping(value = "testjson", method = RequestMethod.GET)
-    public  @ResponseBody List<Person>  springTestjson(){
+    public  @ResponseBody  List<Person> springTestjson(){
 //        List<Person> persons = personService.findall();
 //        System.out.println(persons.size());
 //        return persons;
 
-         List<Person> persons = Arrays.asList(personService.getPerson(1),personService.getPerson(2)) ;
-        System.out.println(persons);
-        return persons;
+//         List<Person> persons = Arrays.asList(personService.getPerson(1),personService.getPerson(2)) ;
+        List<Person> personList = new ArrayList<Person>();
+        Person person1=personService.getPerson(2);
+        Person person2 = personService.getPerson(3);
+
+        personList.add(person1);
+        personList.add(person2);
+
+        return  personList;
+
+//         System.out.println(persons);
+//        System.out.println(persons);
+//        System.out.println(persons);
+////        return persons;
     }
 
 

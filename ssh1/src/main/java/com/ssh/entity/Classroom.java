@@ -31,18 +31,18 @@ public class Classroom {
         this.name = name;
     }
 
-    public Set<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(Set<Person> persons) {
-        this.persons = persons;
-    }
+//    public Set<Person> getPersons() {
+//        return persons;
+//    }
+//
+//    public void setPersons(Set<Person> persons) {
+//        this.persons = persons;
+//    }
 
     private String name;
 
-    @OneToMany
-    @Cascade(value={CascadeType.SAVE_UPDATE})
-    @JoinColumn(name = "classroom_id")
-    private Set<Person> persons = new HashSet<Person>();
+//    @OneToMany
+//    @Cascade(value={CascadeType.SAVE_UPDATE})
+//    @JoinColumn(name = "classroom_id")
+//    private Set<Person> persons = new HashSet<Person>();
 }
