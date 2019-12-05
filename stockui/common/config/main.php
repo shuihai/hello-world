@@ -10,16 +10,23 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=test',
             'username' => 'root',
-            'password' => '123456',
+            'password' => '',
             'charset' => 'utf8',
         ],
-        'db_oldnav' => [
+        'db2' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=101.201.31.185;dbname=robot_scene_activity_nav',
-            'username' => 'zhihuioa',
-            'password' => 'zhihuioa',
+            'dsn' => 'mysql:host=localhost;dbname=jktest',
+            'username' => 'root',
+            'password' => '',
             'charset' => 'utf8',
         ],
+//        'db_oldnav' => [
+//            'class' => 'yii\db\Connection',
+//            'dsn' => 'mysql:host=101.201.31.185;dbname=robot_scene_activity_nav',
+//            'username' => 'zhihuioa',
+//            'password' => 'zhihuioa',
+//            'charset' => 'utf8',
+//        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

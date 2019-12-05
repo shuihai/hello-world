@@ -41,7 +41,12 @@ $url_str = substr($url_str_temp,$begin);
                     </li>
                     <li   <?php if ($url_str == '/lunbo/longhuban'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/longhuban" ]) ?>" title="龙虎榜" > <span class="menu-item-parent">龙虎榜</span></a>
                     </li>
-                    
+                    <li   <?php if ($url_str == '/lunbo/createbi'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/createbi" ]) ?>" title="笔划分" > <span class="menu-item-parent">笔划分</span></a>
+                    </li>
+                    <li   <?php if ($url_str == '/lunbo/createduanxian'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/createduanxian" ]) ?>" title="短线" > <span class="menu-item-parent">短线</span></a>
+                    </li>
+                    <li   <?php if ($url_str == '/lunbo/createweekstatic'  ) {echo "  class='open active'";}?>><a href="<?= \yii\helpers\Url::toRoute(["/lunbo/createweekstatic" ]) ?>" title="周统计" > <span class="menu-item-parent">周统计</span></a>
+                    </li>
                 </ul>
             </div>
         </div>

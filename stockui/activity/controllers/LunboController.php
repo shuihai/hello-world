@@ -53,11 +53,352 @@ class LunboController extends CommonController
         return $this->render('index', ['list' => $list, 'time' => $time]);
     }
 
+
     public function actionCreatemind()
     {
 
         return $this->render('createmind', []);
     }
+
+
+    public function actionCreateduanxian()
+    {
+
+
+        $list = [];
+        $list = Yii::$app->db->createCommand('SELECT * FROM jktest.`zmt_next_close_for_before_limit_stock` order by datetime')
+            ->queryAll();
+
+
+        $axis = [];
+        foreach ($list as $key => $value) {
+
+            $axis[] = $value['datetime'];
+        }
+
+        $startdate = $axis[0];
+        $enddate = $axis[sizeof($axis) - 1];
+
+        $average_rate = [];
+        foreach ($list as $key => $value) {
+
+            $average_rate[] = $value['average_rate'];
+        }
+
+        $list2 = [];
+        $sql = 'SELECT * FROM jktest.`zmt_everyday_index` 
+              where stock_code="000001.XSHG" and datetime>= "' . $startdate . '"   and 
+              
+              datetime<="' . $enddate . '"    order by datetime';
+
+//        var_dump($axis);
+//        echo $sql;die;
+        $list2 = Yii::$app->db->createCommand('SELECT * FROM jktest.`zmt_everyday_index` 
+              where stock_code="000001.XSHG" and datetime>= "' . $startdate . '"   and 
+              
+              datetime<="' . $enddate . '"    order by datetime')
+            ->queryAll();
+
+//        var_dump($list2);die;
+        $index_rate = [];
+        foreach ($list2 as $key => $value) {
+
+            $index_rate[] = ($value['close'] - $value['pre_close']) / $value['pre_close'] * 100;
+        }
+
+        return $this->render('createduanxian', ['average_rate' => $average_rate, 'index_rate' => $index_rate, 'axis' => $axis]);
+
+    }
+
+    public function actionCreatebi()
+    {
+        $list = $this->read_csv("C:\my_soft\wamp\www\gittest\hello-world\stockui\bi_dataset.csv");
+//        var_dump($list);
+        $data = [];
+        foreach ($list as $key => $value) {
+            $temp = [];
+            $temp[] = $value[1];
+            $temp[] = $value[2];
+            $temp[] = $value[3];
+            $temp[] = $value[4];
+            $temp[] = $value[5];
+
+            $data[] = $temp;
+        }
+
+
+        $index_list = [0, 4, 8, 12];
+
+        foreach ($list as $key => $value) {
+            $temp = [];
+            $temp[] = $value[4];
+            $temp[] = $value[5];
+            $low_top_data[] = $temp;
+        }
+
+
+        $index_list = $this->analysisFenxing($low_top_data);
+//        var_dump($index_list);
+//        die;
+        return $this->render('createbi', ['index_list' => $index_list, 'data' => $data]);
+
+    }
+
+    public function actionCreateweekstatic()
+    {
+
+
+        if (Yii::$app->request->get('time')) {
+            $time_arr = Yii::$app->request->get('time');
+            $time_arr = explode(",", $time_arr);
+
+//            $time="";
+//            foreach ($time_arr as $k=>$v){
+//                $time=$time."'".$v."',";
+//
+//            }
+//            $time=trim($time,",");
+            $type = Yii::$app->request->get('modeltype');
+//
+//            $list = Yii::$app->db2->createCommand("SELECT * FROM `zmt_show_result` WHERE datetime in (".$time.") and type='".$type."' order by datetime asc")
+////                ->bindValues([':time' => $time, ':type' => $type])
+//
+//                ->queryAll();
+
+            $list = Yii::$app->db2->createCommand("SELECT * FROM `zmt_show_result` WHERE datetime >='" . $time_arr[0] .
+                "' and datetime<='" . $time_arr[1] . "' and type='" . $type . "' order by datetime asc")
+                ->queryAll();
+
+            $data = [];
+            $data[] = ["begin", 0, 0, 0, 0];
+            $realvalue_arr = [];
+            $realvalue_arr[] = null;
+            foreach ($list as $key => $value) {
+
+                $temp = [];
+                $temp[] = $value["datetime"];
+
+                $probability = explode(",", $value["value"]);
+
+                $index = array_search(max($probability), $probability);
+
+
+                $price_array = $this->trans_index_to_region($index, 11);
+
+                $data[] = array_merge($temp, $price_array);;
+
+
+                $realvalue_arr[] = $value["real_value"];
+            }
+            $data[] = ["end", 0, 0, 0, 0];
+            $realvalue_arr[] = null;
+
+
+            return $this->render('createweekstatic', ['data' => $data, 'realvalue_arr' => $realvalue_arr]);
+
+        } else {
+
+        }
+
+//        SELECT * FROM `zmt_show_result` WHERE datetime in (:time) and type=:type order by datetime desc
+
+
+        $list = $this->read_csv("C:\my_soft\wamp\www\gittest\hello-world\stockui\bi_dataset.csv");
+
+        $data = [];
+        foreach ($list as $key => $value) {
+            $temp = [];
+            $temp[] = $value[1];
+            $temp[] = $value[2];
+            $temp[] = $value[3];
+            $temp[] = $value[4];
+            $temp[] = $value[5];
+
+            $data[] = $temp;
+        }
+
+
+        $index_list = [0, 4, 8, 12];
+
+        foreach ($list as $key => $value) {
+            $temp = [];
+            $temp[] = $value[4];
+            $temp[] = $value[5];
+            $low_top_data[] = $temp;
+        }
+
+
+        $index_list = $this->analysisFenxing($low_top_data);
+//        var_dump($index_list);
+//        die;
+        return $this->render('createweekstatic', ['index_list' => $index_list, 'data' => $data]);
+
+    }
+
+
+    public function trans_index_to_region($index, $class_num)
+    {
+        if ($class_num == 7) {
+            $result = [$index - 3.5, $index - 2.5, $index - 3.5, $index - 2.5];
+        }
+
+        if ($class_num == 11) {
+            if ($index < 5) {
+                $low = ($index - 6) * 0.5;
+                $high = ($index - 6 + 1) * 0.5;
+
+                $mean = rand(-1,1);
+            }
+            if ($index >= 5 && $index <= 7) {
+                $low = -0.5;
+                $high = 0.5;
+
+            }
+            if ($index > 7) {
+                $low = ($index - 6 - 1) * 0.5;
+                $high = ($index - 6) * 0.5;
+
+            }
+            //正态化混淆
+            //
+
+            $result = [$low,$high, $low, $high];
+        }
+
+        return $result;
+    }
+
+    public function analysisFenxing($dataset)
+    {
+
+        $dingdiList = [];
+        $dingList = [];
+        $diList = [];
+        for ($i = 0; $i < count($dataset); $i++) {
+            # 对于开头，看是否第5个及以后是否先形成了顶分或者底分型
+            # 条件：一:3个k线构成标准形状：中间突出，两边下沉，注意包含则顺延 二：中间那根k线需要是从上一个顶底分型开始，直到他后一个k线，这些k线的最高或者最低点
+
+
+            if (count($dingdiList) > 0)
+                $beforeIndex = $dingdiList[count($dingdiList) - 1];
+            else
+                $beforeIndex = 0;
+
+            if (count($dingList) > 0)
+                $beforedingIndex = $dingList[count($dingList) - 1];
+            else
+                $beforedingIndex = 0;
+
+            if (count($diList) > 0)
+                $beforediIndex = $diList[count($diList) - 1];
+            else
+                $beforediIndex = 0;
+
+            if ($beforeIndex == 0) {
+                if ($i > 0) {
+                    # 假如将确定第一个底分型，
+                    if (min($dataset[$i - 1][0], $dataset[$i][0], $dataset[$i + 1][0]) == $dataset[$i][0]) {
+                        $dingdiList[] = $i;
+                        $diList[] = $i;
+                    } elseif (max($dataset[$i - 1][1], $dataset[$i][1], $dataset[$i + 1][1]) == $dataset[$i][1]) {
+                        $dingdiList[] = $i;
+                        $dingList[] = $i;
+                    }
+                    # print("max(dataset[i - 1:i + 2][1]) == dataset[i][1]")
+                    # print(max(dataset[i - 1:i + 2, 1]) == dataset[i][1])
+                    # print(max(dataset[i - 1:i + 2, 1]))
+                    # print((dataset[i - 1:i + 2, 1]))
+                    # print((dataset[i - 1:i + 3, 1]))
+                    # print(dataset[i][1])
+                }
+            } else {
+                # 前面是底分型
+                $bidataset = array_slice($dataset, $beforediIndex, $i + 1 - $beforediIndex);
+                $bidataset0 = [];
+                foreach ($bidataset as $key => $value) {
+                    $bidataset0[] = $value[0];
+                }
+
+                if ($beforediIndex == $beforeIndex) {
+                    if (($i < count($dataset) - 1) && (max($dataset[$i - 1][1], $dataset[$i][1], $dataset[$i + 1][1]) == $dataset[$i][1]) && (($i - $beforediIndex) >= 4) && (min(
+                                $bidataset0) == $dataset[$beforediIndex][0])) {
+                        $dingdiList[] = $i;
+                        $dingList[] = $i;
+
+                    }
+
+
+                    if ($dataset[$i][0] < $dataset[$beforediIndex][0]) {
+                        $dingdiList[count($dingdiList) - 1] = $i;
+                        if (count($diList) > 0) {
+                            $diList[count($diList) - 1] = $i;
+                        }
+                    }
+
+
+                }
+
+                # else:
+                #     diList.append(i)
+                # 前面是顶分型
+                $bidataset = array_slice($dataset, $beforedingIndex, $i + 1 - $beforedingIndex);
+                if ($beforedingIndex == $beforeIndex) {
+                    $bidataset1 = [];
+                    foreach ($bidataset as $key => $value) {
+                        $bidataset1[] = $value[1];
+                    }
+
+
+                    if (($i < count($dataset) - 1) && (min($dataset[$i - 1][0], $dataset[$i][0], $dataset[$i + 1][0]) == $dataset[$i][0]) && (($i - $beforedingIndex) >= 4) && (max(
+                                $bidataset1) == $dataset[$beforedingIndex][1])) {
+
+                        $dingdiList[] = $i;
+                        $diList[] = $i;
+                    }
+
+
+                    if ($dataset[$i][1] > $dataset[$beforedingIndex][1]) {
+                        $dingdiList[count($dingdiList) - 1] = $i;
+                        if (count($dingList) > 0) {
+                            $dingList[count($dingList) - 1] = $i;
+                        }
+
+                    }
+                }
+
+            }
+//            echo $i. "dingList";
+//            var_dump($dingList);
+//            echo $i. "diList";
+//            var_dump($diList);
+        }
+
+        return $dingdiList;
+    }
+
+    function read_csv($file)
+    {
+        setlocale(LC_ALL, 'zh_CN');//linux系统下生效
+        $data = null;//返回的文件数据行
+        if (!is_file($file) && !file_exists($file)) {
+            die('文件错误');
+        }
+        $cvs_file = fopen($file, 'r'); //开始读取csv文件数据
+        $i = 0;//记录cvs的行
+        while ($file_data = fgetcsv($cvs_file)) {
+            $i++;
+            if ($i == 1) {
+                continue;//过滤表头
+            }
+            if ($file_data[0] != '') {
+                $data[$i] = $file_data;
+            }
+
+        }
+        fclose($cvs_file);
+        return $data;
+    }
+
 
     public function actionLonghuban()
     {

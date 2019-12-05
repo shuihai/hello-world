@@ -16,7 +16,7 @@ $this->render(
 ?>
 
 <!--<script src="../js/echarts.min.js"></script>-->
-<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
 <!--/sidebar-->
 <!--main-->
 
